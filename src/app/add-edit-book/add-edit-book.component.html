@@ -1,0 +1,64 @@
+<div style="border:1px solid blue; text-align:center">
+<form #addForm="ngForm" (ngSubmit)="onAddBook(addForm)" id="formAddBook" class="clr-form clr-form-vertical">
+    <div class="clr-form-control">
+        <label for="title" class="clr-control-label">Title</label>
+        <div class="clr-control-container">
+            <div class="clr-input-wrapper">
+                <input type="text" ngModel id="title" name="title" placeholder="Title.." class="clr-input" />
+            </div>
+        </div>
+    </div>
+    <div class="clr-form-control">
+        <label for="description" class="clr-control-label">Description</label>
+        <div class="clr-control-container">
+            <div class="clr-input-wrapper">
+                <input type="text" ngModel id="description" name="description" placeholder="Description.."
+                    class="clr-input" />
+            </div>
+        </div>
+    </div>
+
+
+    <clr-date-container>
+        <label>Published Date</label>
+        <input clrDate ngModel name="publishedDate" placeholder="Pick a date" name="publishedDate" />
+    </clr-date-container>
+
+
+    <div class="clr-form-control">
+        <label for="quantity" class="clr-control-label">Quantity</label>
+        <div class="clr-control-container">
+            <div class="clr-input-wrapper">
+                <input type="number" ngModel name="quantity" id="quantity" (input)="createRange($event);"
+                    placeholder="Title.." class="clr-input" />
+            </div>
+        </div>
+    </div>
+
+    <div id="ISBNss" *ngFor="let r of getRange(); let i=index" class="clr-form-control">
+        <label for="{{i}}" class="clr-control-label">Isbn{{i}}</label>
+        <div class="clr-control-container">
+            <div class="clr-input-wrapper">
+                <input type="text" [(ngModel)]="isbnData[i]" name="{{i}}" id="{{i}}" placeholder="ISBN number.."
+                    class="clr-input" />
+            </div>
+        </div>
+    </div>
+    <div id="genres" *ngFor="let m of genres;let j=index" class="clr-form-control">
+        <cds-form-group layout="vertical">
+            <cds-checkbox-group layout="vertical">
+                <label>Genres</label>
+                <cds-checkbox>
+                    <label>{{m.name}}</label>
+                    <input type="checkbox" [(ngModel)]="genresSelected[j]" name="{{j}}"  />
+                </cds-checkbox>
+            </cds-checkbox-group>
+        </cds-form-group>
+    </div>
+
+    <br><br>
+    <div class="btn-group btn-primary">
+        <button type="submit" class="btn">Add</button>
+    </div>
+</form>
+</div>

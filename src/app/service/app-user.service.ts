@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
 import { AppUser } from '../model/app-user.model';
@@ -14,8 +15,8 @@ export class AppUserService {
 
 
   private httpOptions = {
-    headers: new HttpHeaders({ 
-      'Access-Control-Allow-Origin':'*'
+    headers: new HttpHeaders({
+      'Access-Control-Allow-Origin': '*'
     })
   };
   private apiServerURL = environment.apiBaseURL;
@@ -31,14 +32,16 @@ export class AppUserService {
   }
 
 
-public login(username:string, password:string): Observable<any>{
-  let headers = {
-    "Content-Type": "application/x-www-form-urlencoded"
-   
-}
-  const params = new HttpParams().set('username', username).set('password', password);
-  return this.http.post<any>(`${this.apiServerURL}/login`, { params },{headers:headers});
-}
+  public login(username: string, password: string): Observable<any> {
+    const body = new URLSearchParams();
+    body.set('username', username);
+    body.set('password', password);
+
+    let options = {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+    };
+    return this.http.post<any>(`${this.apiServerURL}/login`, body, options);
+  }
 
 
   public addRole(role: Role): Observable<Role> {

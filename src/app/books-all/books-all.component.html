@@ -1,0 +1,22 @@
+
+<cds-card aria-labelledby="containerOfCards1">
+    <div *ngFor="let book of books" cds-layout="vertical gap:md">
+        <h2 id="containerOfCards1" cds-text="section" cds-layout="horizontal align:vertical-center">
+            {{book.title}} <cds-icon shape="times" cds-layout="align:right"></cds-icon>
+        </h2>
+
+        <div cds-text="body light" cds-layout="p-y:lg">
+          {{book.publishedDate}}
+        </div>
+        <div cds-text="body light" cds-layout="p-y:lg">
+          {{book.description}}
+        </div>
+        <div *ngFor="let isbn of book.isbns" cds-text="body light" cds-layout="p-y:lg">
+          {{isbn.isbn}}
+        </div>
+
+        
+
+        <div cds-layout="horizontal gap:sm p-y:sm align:vertical-center"></div>
+    </div>
+</cds-card>

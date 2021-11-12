@@ -13,12 +13,13 @@ export class BookService {
 
   constructor(private http:HttpClient) { }
 
-  public getGenres(): Observable<Book[]>{
+  public getBooks(): Observable<Book[]>{
     return this.http.get<Book[]>(`${this.apiServerURL}/books/all`);
   }
 
-  public getBookById(genreId:number): Observable<Book>{
-    return this.http.get<Book>(`${this.apiServerURL}/books/find/${genreId}`);
+
+  public getBookById(bookId:number): Observable<Book>{
+    return this.http.get<Book>(`${this.apiServerURL}/books/find/${bookId}`);
   }
 
   public addBook(book:Book): Observable<Book>{

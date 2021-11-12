@@ -1,6 +1,6 @@
 export interface ISBN {
     id:number;
-    ISBN:string;
+    isbn:string;
     borrowed:boolean;
     book_id:number;
 }
