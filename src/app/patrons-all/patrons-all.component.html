@@ -1,0 +1,26 @@
+<cds-card  *ngFor="let patron of patrons; let a=index" aria-labelledby="cardWithList" style="--width: 15rem">
+    <div cds-layout="vertical gap:md">
+        <h2 id="cardWithList" cds-text="section" cds-layout="horizontal gap:sm align:vertical-center">
+           Patron {{a+1}}
+        </h2>
+
+        <cds-divider cds-card-remove-margin></cds-divider>
+
+        <div cds-text="body light" cds-layout="p-y:md">
+            <ul cds-list="unstyled">
+                <li>First Name: {{patron.firstName}}</li>
+                <li>Last Name: {{patron.lastName}}</li>
+                <li>Phone Number: {{patron.phoneNumber}}</li>
+                <li>Score: {{patron.score}}</li>
+                <li>Nr. Books Allowed: {{patron.nrBooksAllowed}}</li>
+                
+            </ul>
+        </div>
+
+        <cds-divider cds-card-remove-margin></cds-divider>
+
+        <div cds-layout="horizontal gap:sm p-y:sm align:vertical-center">
+            <a routerLink="/editPatron/{{patron.id}}" class="nav-link nav-text">Edit Patron</a>
+        </div>
+    </div>
+</cds-card>

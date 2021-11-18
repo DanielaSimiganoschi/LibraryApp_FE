@@ -1,22 +1,35 @@
 
-<cds-card aria-labelledby="containerOfCards1">
-    <div *ngFor="let book of books" cds-layout="vertical gap:md">
-        <h2 id="containerOfCards1" cds-text="section" cds-layout="horizontal align:vertical-center">
-            {{book.title}} <cds-icon shape="times" cds-layout="align:right"></cds-icon>
-        </h2>
+<div cds-layout="horizontal gap:md align:horizontal-center" *ngFor="let book of books">
+    <cds-card aria-labelledby="cardSocialPost" style="--width: 15rem">
+        <div cds-layout="vertical gap:md">
+            <h2 id="cardSocialPost" cds-text="section" cds-layout="horizontal gap:sm align:vertical-center">
+                Title: {{book.title}}<br>
 
-        <div cds-text="body light" cds-layout="p-y:lg">
-          {{book.publishedDate}}
-        </div>
-        <div cds-text="body light" cds-layout="p-y:lg">
-          {{book.description}}
-        </div>
-        <div *ngFor="let isbn of book.isbns" cds-text="body light" cds-layout="p-y:lg">
-          {{isbn.isbn}}
-        </div>
+            </h2>
 
-        
+            <cds-divider cds-card-remove-margin></cds-divider><br>
 
-        <div cds-layout="horizontal gap:sm p-y:sm align:vertical-center"></div>
+            <div cds-text="body light" cds-layout="p-y:md">
+
+                <i>Description:</i> {{book.description}}<br>
+            </div><br>
+            <div cds-text="body light" cds-layout="p-y:md">
+
+
+                <i>Author:</i> {{book.author.firstName}} {{book.author.lastName}}<br>
+            </div><br>
+
+            <cds-divider cds-card-remove-margin></cds-divider>
+            <br>
+            <div cds-layout="horizontal gap:sm p-y:sm align:vertical-center">
+                <cds-button action="flat-inline">
+                    <a routerLink="/editBook/{{book.id}}" class="nav-link nav-text">Edit</a>
+                </cds-button> &nbsp;&nbsp;
+                <cds-button action="flat-inline">
+                    <a routerLink="/deleteBook/{{book.id}}" class="nav-link nav-text">Delete</a>
+                </cds-button>
+            </div>
+            <br>
+        </div>
+    </cds-card>
     </div>
-</cds-card>

@@ -1,0 +1,21 @@
+<cds-card  *ngFor="let genre of genres; let a=index" aria-labelledby="cardWithList" style="--width: 15rem">
+    <div cds-layout="vertical gap:md">
+        <h2 id="cardWithList" cds-text="section" cds-layout="horizontal gap:sm align:vertical-center">
+           Genre {{a+1}}
+        </h2>
+
+        <cds-divider cds-card-remove-margin></cds-divider>
+
+        <div cds-text="body light" cds-layout="p-y:md">
+            <ul cds-list="unstyled">
+                <li>Name: {{genre.name}}</li>
+            </ul>
+        </div>
+
+        <cds-divider cds-card-remove-margin></cds-divider>
+
+        <div cds-layout="horizontal gap:sm p-y:sm align:vertical-center">
+            <a routerLink="/editGenre/{{genre.id}}" class="nav-link nav-text">Edit Genre</a>
+        </div>
+    </div>
+</cds-card>

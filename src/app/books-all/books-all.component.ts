@@ -16,25 +16,25 @@ export class BooksAllComponent implements OnInit {
 
   constructor(private bookService: BookService, private router: Router) { }
 
-  public getBooks(): void {
-    this.bookService.getBooks().subscribe(
-      (response: Book[]) => {
-        
-        this.books = response;
-        console.log(this.books[0].isbns)
-      },
-      (error: HttpErrorResponse) => {
-        if(error.status === 403){
-          this.router.navigate(['/login']);
-        }
-        
-
-      }
-    )
-  }
 
   ngOnInit(): void {
     this.getBooks();
   }
+  
+  public getBooks(): void {
+    this.bookService.getBooks().subscribe(
+      (response: Book[]) => {
+        this.books = response;
+        console.log(this.books[0].isbns)
+      },
+      (error: HttpErrorResponse) => {
+        if (error.status === 403) {
+          this.router.navigate(['/login']);
+        }
+      }
+    )
+  }
+
+
 
 }

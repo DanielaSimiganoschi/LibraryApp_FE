@@ -27,7 +27,7 @@ export class PatronService {
   }
 
   public updatePatron(patron:Patron): Observable<Patron>{
-    return this.http.post<Patron>(`${this.apiServerURL}/patrons/update`,patron);
+    return this.http.put<Patron>(`${this.apiServerURL}/patrons/update`,patron);
   }
 
   public deletePatron(patronId:number): Observable<void>{
