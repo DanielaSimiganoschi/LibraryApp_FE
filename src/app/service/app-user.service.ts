@@ -7,6 +7,7 @@ import { AppUser } from '../model/app-user.model';
 import { LoginUser } from '../model/login-user.model';
 import { RoleToUser } from '../model/role-to-user.model';
 import { Role } from '../model/role.model';
+import { JwtHelperService, JwtModule } from "@auth0/angular-jwt"; 
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class AppUserService {
   };
   private apiServerURL = environment.apiBaseURL;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) { }
 
   public getUsers(): Observable<AppUser[]> {
     return this.http.get<AppUser[]>(`${this.apiServerURL}/users/all`);
@@ -29,6 +30,13 @@ export class AppUserService {
 
   public addUser(user: AppUser): Observable<AppUser> {
     return this.http.post<AppUser>(`${this.apiServerURL}/users/add`, user);
+  }
+
+  public isAuthenticated(): boolean {
+    let token = localStorage.getItem('access_token') || undefined;
+    // Check whether the token is expired and return
+    // true or false
+    return !this.jwtHelper.isTokenExpired(token);
   }
 
 

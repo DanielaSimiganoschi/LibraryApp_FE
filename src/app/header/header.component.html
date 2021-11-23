@@ -6,14 +6,21 @@
     </a>
   </div>
   <div class="header-nav">
-    <a routerLink="/sign-up" class="nav-link nav-text">SIGN UP</a>
-    <a routerLink="/login" class="nav-link nav-text">LOGIN</a>
+    <a routerLink="/users" class="nav-link nav-text">USERS</a>
     <a routerLink="/books" class="nav-link nav-text">BOOKS</a>
-    <a routerLink="/addBook" class="nav-link nav-text">Add Book</a>
     <a routerLink="/patrons" class="nav-link nav-text">PATRONS</a>
-    <a routerLink="/addPatron" class="nav-link nav-text">Add Patron</a>
-    <a routerLink="/genres" class="nav-link nav-text">GENRES</a>
-    <a routerLink="/addGenre" class="nav-link nav-text">Add Genre</a>
-  </div>
 
+    <!--<a routerLink="/login" class="nav-link nav-text">LOGIN</a>-->
+    <a href="javascript:void(0);" (click)="changeModalVisible()"  class="nav-link nav-text">LOGOUT</a>
+
+    
+  </div>
+  <clr-modal [(clrModalOpen)]="isModalVisible">
+    <h3 class="modal-title">Are you sure you want to Log Out?</h3>
+    <div class="modal-body">This cannot be undone.</div>
+    <div class="modal-footer">
+      <button type="button" class="btn" (click)="isModalVisible = false">Cancel</button>
+      <button type="button" class="btn" (click)="logOut()">Log Out</button>
+    </div>
+  </clr-modal>
 </header>

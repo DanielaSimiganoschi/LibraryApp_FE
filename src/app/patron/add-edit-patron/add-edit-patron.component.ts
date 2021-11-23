@@ -2,8 +2,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Patron } from '../model/patron.model';
-import { PatronService } from '../service/patron.service';
+import { Patron } from '../../model/patron.model';
+import { PatronService } from '../../service/patron.service';
 
 @Component({
   selector: 'app-add-edit-patron',
@@ -24,6 +24,8 @@ export class AddEditPatronComponent implements OnInit {
   });
 
   constructor(private formBuilder: FormBuilder, private patronService: PatronService, private route: ActivatedRoute) { }
+  
+  get f() { return this.form.controls; }
 
   ngOnInit(): void {
     this.idPatron = this.route.snapshot.params['id'];
@@ -40,7 +42,11 @@ export class AddEditPatronComponent implements OnInit {
   }
 
   public onSubmit() {
-    this.submitted = true;
+      this.submitted = true;
+
+    if (this.form.invalid) {
+        return;
+    }
 
     if (this.isAddMode) {
       this.onAddPatron();

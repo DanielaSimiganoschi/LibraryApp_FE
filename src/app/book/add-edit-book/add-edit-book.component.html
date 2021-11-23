@@ -8,6 +8,10 @@
             </div>
         </div>
     </div>
+    <div *ngIf="submitted && f.title.errors">
+        <div *ngIf="f.title.errors?.required">Title is required</div>
+    </div>
+
     <div class="clr-form-control">
         <label for="description" class="clr-control-label">Description</label>
         <div class="clr-control-container">
@@ -17,7 +21,9 @@
             </div>
         </div>
     </div>
-
+    <div *ngIf="submitted && f.description.errors">
+        <div *ngIf="f.description.errors?.required">Description is required</div>
+    </div>
 
     <div class="clr-form-control">
         <clr-date-container>
@@ -26,16 +32,22 @@
                 name="publishedDate" placeholder="Pick a date" />
         </clr-date-container>
     </div>
+    <div *ngIf="submitted && f.publishedDate.errors">
+        <div *ngIf="f.publishedDate.errors?.required">Published Date is required</div>
+    </div>
 
     <div class="clr-form-control">
         <label for="author" class="clr-control-label">Author</label>
         <div class="clr-control-container">
-        <select [compareWith]="compareAuthors" formControlName="author" class="form-control" [ngClass]="{'is-invalid': submitted}" clrSelect
-            name="author" (change)="onAuthorChange($event)">
-            <option *ngFor="let author of authors; let a=index" [value]="author">{{author.firstName}}
-                {{author.lastName}}</option>
-         </select>
+            <select [compareWith]="compareAuthors" formControlName="author" class="form-control"
+                [ngClass]="{'is-invalid': submitted}" clrSelect name="author" (change)="onAuthorChange($event)">
+                <option *ngFor="let author of authors; let a=index" [ngValue]="author">{{author.firstName}}
+                    {{author.lastName}}</option>
+            </select>
+        </div>
     </div>
+    <div *ngIf="submitted && f.author.errors">
+        <div *ngIf="f.author.errors?.required">Description is required</div>
     </div>
 
     <div class="clr-form-control">
@@ -48,17 +60,29 @@
             </div>
         </div>
     </div>
+    <div *ngIf="submitted && f.quantity.errors">
+        <div *ngIf="f.quantity.errors?.required">Quantity is required</div>
+    </div>
 
-    <div id="ISBNs" *ngFor="let rangeIsbns of form.get('isbns')?.value; let i=index" class="clr-form-control">
-        <label for="{{i}}" class="clr-control-label">Isbn{{i}}</label>
-        <div class="clr-control-container">
-            <div class="clr-input-wrapper">
-                <input type="text" class="form-control" [ngClass]="{ 'is-invalid': submitted}"
-                    (input)="updateISBNS($event,i)" name="isbns" id="{{i}}" [value]="rangeIsbns?.isbn"
-                    class="clr-input" />
+    <div *ngFor="let rangeIsbns of form.get('isbns')?.value; let i=index">
+        <div id="ISBNs" class="clr-form-control">
+            <label for="{{i}}" class="clr-control-label">Isbn{{i}}</label>
+            <div class="clr-control-container">
+                <div class="clr-input-wrapper">
+                    <input type="text" class="form-control" [ngClass]="{ 'is-invalid': submitted}"
+                        (input)="updateISBNS($event,i)" name="isbns" id="{{i}}" [value]="rangeIsbns?.isbn"
+                        class="clr-input" minlength="10" />
+                </div>
             </div>
+
+        </div>
+        <div *ngIf="submitted" style="width:100%">
+            <div *ngIf="isISBNEmpty(i)">
+                ISBN is required</div>
+            <div *ngIf="!isISBNEmpty(i) &&rangeIsbns.isbn?.length<10">Isbn should contain at least 10 Ch</div>
         </div>
     </div>
+
 
 
     <br>

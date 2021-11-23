@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 import { AppUser } from '../model/app-user.model';
@@ -23,7 +24,7 @@ export class UserAuthComponent implements OnInit {
 
   public appUsers: AppUser[] = [];
 
-  constructor(private userService: AppUserService) {
+  constructor(private userService: AppUserService, private router: Router) {
    
   }
 
@@ -43,7 +44,8 @@ export class UserAuthComponent implements OnInit {
       (response: any) => {
         console.log(response['access_token']);
         this._isLoggedIn$.next(true);
-        localStorage.setItem(this.TOKEN_NAME, response[this.TOKEN_NAME])
+        localStorage.setItem(this.TOKEN_NAME, response[this.TOKEN_NAME]);
+        this.router.navigate(['books']);
       },
       (error: HttpErrorResponse) => {
         console.log(error.message);

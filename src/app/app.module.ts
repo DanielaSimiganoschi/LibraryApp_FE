@@ -9,28 +9,22 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserAuthComponent } from './user-auth/user-auth.component';
 import { HeaderComponent } from './header/header.component';
-import { BooksAllComponent } from './books-all/books-all.component';
 import { CdsModule } from '@cds/angular';
 import { AuthInterceptorProvider } from './auth.interceptor';
-import { AddEditBookComponent } from './add-edit-book/add-edit-book.component';
+import { 
+  AuthGuardService as AuthGuard 
+} from './service/auth-guard.service';
+import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
 
 import '@cds/core/alert/register.js';
-import { AddEditPatronComponent } from './add-edit-patron/add-edit-patron.component';
-import { PatronsAllComponent } from './patrons-all/patrons-all.component';
-import { GenresAllComponent } from './genres-all/genres-all.component';
-import { AddEditGenreComponent } from './add-edit-genre/add-edit-genre.component';
+import { RouterModule } from '@angular/router';
+import { PatronModule } from './patron/patron.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserAuthComponent,
     HeaderComponent,
-    BooksAllComponent,
-    AddEditBookComponent,
-    AddEditPatronComponent,
-    PatronsAllComponent,
-    GenresAllComponent,
-    AddEditGenreComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,9 +35,21 @@ import { AddEditGenreComponent } from './add-edit-genre/add-edit-genre.component
     FormsModule,
     ReactiveFormsModule,
     ClrIconModule,
-    CdsModule
+    CdsModule,
+    RouterModule.forChild([
+      {
+        path: "books",
+        loadChildren: () => import('./book/book.module').then(m => m.BookModule)
+      },
+      {
+        path:"patrons",
+        loadChildren:() => PatronModule
+      }
+    ])
+
   ],
-  providers: [AuthInterceptorProvider],
+  providers: [AuthInterceptorProvider, AuthGuard,  { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

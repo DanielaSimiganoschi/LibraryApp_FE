@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
 import { Book } from '../model/book.model';
+import { ISBN } from '../model/isbn.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,10 @@ export class BookService {
 
   public getBookById(bookId:number): Observable<Book>{
     return this.http.get<Book>(`${this.apiServerURL}/books/find/${bookId}`);
+  }
+
+  public getBookByTitle(bookTitle:string): Observable<Book>{
+    return this.http.get<Book>(`${this.apiServerURL}/books/findByTitle/${bookTitle}`);
   }
 
   public addBook(book:Book): Observable<Book>{
@@ -42,4 +47,8 @@ export class BookService {
     return this.http.get<Book[]>(`${this.apiServerURL}/books/filterByAuthor/${authorId}`);
   }
 
+
+  public getISBNSforBookId(bookId:number): Observable<ISBN[]>{
+    return this.http.get<ISBN[]>(`${this.apiServerURL}/books/getISBNSForBookID/${bookId}`);
+  }
 }

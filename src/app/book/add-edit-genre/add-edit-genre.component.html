@@ -8,6 +8,9 @@
             </div>
         </div>
     </div>
+    <div *ngIf="submitted && f.name.errors">
+        <div *ngIf="f.name.errors?.required">Name is required</div>
+    </div>
 
     <div class="btn-group btn-primary">
         <button type="submit" class="btn">Save Changes</button>

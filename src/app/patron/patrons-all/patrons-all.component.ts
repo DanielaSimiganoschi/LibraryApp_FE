@@ -1,8 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Patron } from '../model/patron.model';
-import { PatronService } from '../service/patron.service';
+import { Patron } from '../../model/patron.model';
+import { PatronService } from '../../service/patron.service';
 
 @Component({
   selector: 'app-patrons-all',
@@ -25,9 +25,7 @@ export class PatronsAllComponent implements OnInit {
         this.patrons = response;
       },
       (error: HttpErrorResponse) => {
-        if (error.status === 403) {
-          this.router.navigate(['/login']);
-        }
+       
       }
     )
   }

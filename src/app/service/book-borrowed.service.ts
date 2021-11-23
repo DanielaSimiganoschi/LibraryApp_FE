@@ -22,7 +22,7 @@ export class BookBorrowedService {
   }
 
   public updateBookBorrowed(bookBorrowed:BookBorrowed): Observable<BookBorrowed>{
-    return this.http.post<BookBorrowed>(`${this.apiServerURL}/booksBorrowed/update`,bookBorrowed);
+    return this.http.put<BookBorrowed>(`${this.apiServerURL}/booksBorrowed/update`,bookBorrowed);
   }
 
   public deleteBookBorrowed(bookBorrowedId:number): Observable<void>{

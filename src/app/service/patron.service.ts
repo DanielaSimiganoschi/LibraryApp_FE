@@ -51,5 +51,4 @@ export class PatronService {
     return this.http.get<BookBorrowed[]>(`${this.apiServerURL}/patrons/findBooksNotReturned/${id}`);
   }
 
-
 }

@@ -1,0 +1,57 @@
+<br>
+<div style="margin-left:60px!important" class="clr-row">
+    <div class="clr-col-lg-4 clr-col-12">
+        <a routerLink="addBook"><button class="btn">Add Book</button></a>
+        <a routerLink="genres"><button class="btn">Genres</button></a>
+        <a routerLink="isbns"><button class="btn">ISBNS</button></a>
+    </div>
+</div>
+
+
+<br>
+<div style="margin-left:60px!important" class="clr-row">
+    <div class="clr-col-lg-4 clr-col-12" *ngFor="let book of books">
+
+        <cds-card aria-labelledby="cardSocialPost" style="--width: 20rem">
+            <div style="padding-left:10px;" cds-layout="vertical gap:md">
+                <h2 id="cardSocialPost" cds-text="section" cds-layout="horizontal gap:sm align:vertical-center">
+                    Title: {{book.title}}<br>
+                </h2>
+
+                <cds-divider cds-card-remove-margin></cds-divider><br>
+
+                <div cds-text="body light" cds-layout="p-y:md">
+
+                    <i>Description:</i> {{book.description}}<br>
+                </div><br>
+                <div cds-text="body light" cds-layout="p-y:md">
+                    <i>Author:</i> {{book.author.firstName}} {{book.author.lastName}}<br>
+                </div><br>
+
+                <cds-divider cds-card-remove-margin></cds-divider>
+                <br>
+                <div cds-layout="horizontal gap:sm p-y:sm align:vertical-center">
+                    <cds-button action="flat-inline">
+                        <a routerLink="editBook/{{book.id}}" class="nav-link nav-text">Edit</a>
+                    </cds-button> &nbsp;&nbsp;
+                    <cds-button action="flat-inline">
+                        <a routerLink="addISBNS/{{book.id}}" class="nav-link nav-text">Add ISBN</a>
+                    </cds-button> &nbsp;&nbsp;
+                    <cds-button action="flat-inline">
+                        &nbsp;  &nbsp;   <a  href="javascript:void(0);" (click)="changeModalVisible();deleteBook(book.id)"  class="nav-link nav-text">Delete Book</a>
+                    </cds-button>
+                </div>
+                <br>
+            </div>
+        </cds-card><br>
+    </div>
+
+    <clr-modal [(clrModalOpen)]="isModalVisible">
+        <h3 class="modal-title">Are you sure you want to delete this genre?</h3>
+        <div class="modal-body">This cannot be undone.</div>
+        <div class="modal-footer">
+          <button type="button" class="btn" (click)="isModalVisible = false">Cancel</button>
+          <button type="button" class="btn" (click)="confirm();isModalVisible = false">Delete</button>
+        </div>
+      </clr-modal>
+</div>

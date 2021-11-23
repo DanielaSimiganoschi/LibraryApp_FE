@@ -1,15 +1,15 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
-import { Author } from '../model/author.model';
-import { Book } from '../model/book.model';
-import { Genre } from '../model/genre.model';
-import { ISBN } from '../model/isbn.model';
-import { AuthorService } from '../service/author.service';
-import { BookService } from '../service/book.service';
+import { Author } from '../../model/author.model';
+import { Book } from '../../model/book.model';
+import { Genre } from '../../model/genre.model';
+import { ISBN } from '../../model/isbn.model';
+import { AuthorService } from '../../service/author.service';
+import { BookService } from '../../service/book.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { GenreService } from '../service/genre.service';
-import { BookBorrowedService } from '../service/book-borrowed.service';
+import { GenreService } from '../../service/genre.service';
+import { BookBorrowedService } from '../../service/book-borrowed.service';
 
 @Component({
   selector: 'app-add-edit-book',
@@ -35,7 +35,7 @@ export class AddEditBookComponent implements OnInit {
     title: ['', Validators.required],
     description: ['', Validators.required],
     publishedDate: ['', Validators.required],
-    author: [2, [Validators.required]],
+    author: ['', [Validators.required]],
     quantity: ['', [Validators.required]],
     isbns: [[], [Validators.required]],
     genres: ['', [Validators.required]],
@@ -51,6 +51,8 @@ export class AddEditBookComponent implements OnInit {
       }
     )
   }
+
+
 
   public getAuthors(): void {
     this.authorService.getAuthors().subscribe(
@@ -68,6 +70,8 @@ export class AddEditBookComponent implements OnInit {
     console.log(item1.id);
     return item1.id === item2.id;
   }
+
+  get f() { return this.form.controls; }
 
   ngOnInit(): void {
 
@@ -95,17 +99,18 @@ export class AddEditBookComponent implements OnInit {
           console.log(this.form);
           this.createRange();
         });
-
     }
+
     this.form.get("quantity")?.valueChanges.subscribe((quantity) => {
-      this.form.get("isbns")?.setValue(new Array(this.form.get("quantity")?.value));
+      this.form.get("isbns")?.setValue(new Array(this.form.get("quantity")?.value).fill(Object.assign({},{
+        isbn:""
+      })));
 
       for (let i = 0; i < quantity; i++) {
         let isbnA: ISBN = {} as ISBN;
         this.isbnsA.push(isbnA);
       }
     });
-
   }
 
 
@@ -124,19 +129,21 @@ export class AddEditBookComponent implements OnInit {
     this.book.author = this.authors[event.target.options.selectedIndex];
   }
 
+  isISBNEmpty(index: number): boolean {
+    return this.form.get("isbns")?.value[index].isbn.length == 0;
+  }
 
   updateISBNS(event: any, index: number) {
+    const isbns = this.form.get("isbns")?.value;
     if (!this.isAddMode) {
-
-      const isbns = this.form.get("isbns")?.value;
       console.log(isbns);
       isbns[index].isbn = event.target.value;
       this.form.get("isbns")?.setValue(isbns);
 
     } else {
       console.log(this.isbnsA);
-      this.isbnsA[index].isbn = event.target.value;
-      //this.form.get("isbns")?.setValue(this.isbnsA);
+      isbns[index].isbn = event.target.value;
+      this.form.get("isbns")?.setValue(isbns);
 
     }
   }
@@ -145,10 +152,11 @@ export class AddEditBookComponent implements OnInit {
   public onSubmit() {
     console.log(this.form.get("genres")?.value)
     this.submitted = true;
-    // if (this.form.invalid) {
-    //   console.log("Ssssssss")
-    //   return;
-    // }
+
+    if (this.form.invalid) {
+      return;
+    }
+
 
     if (this.isAddMode) {
       this.onAddBook();

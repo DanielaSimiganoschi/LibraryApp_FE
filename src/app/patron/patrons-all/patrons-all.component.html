@@ -1,0 +1,58 @@
+<br>
+<div style="margin-left:60px!important" class="clr-row">
+    <div class="clr-col-lg-4 clr-col-12">
+        <a routerLink="addPatron"><button class="btn">Add Patron</button></a>
+        <a routerLink="search"><button class="btn">Search Patron</button></a>
+    </div>
+</div>
+<br>
+
+
+<div style="margin-left:60px!important" class="clr-row">
+    <div class="clr-col-lg-4 clr-col-12" *ngFor="let patron of patrons; let a=index">
+
+        <cds-card aria-labelledby="cardSocialPost" style="--width: 20rem">
+            <div style="padding-left:10px;" cds-layout="vertical gap:md">
+              
+                <h3>{{patron.firstName}} {{patron.lastName}}</h3>
+                <cds-divider cds-card-remove-margin></cds-divider><br>
+
+                <div cds-text="body light" cds-layout="p-y:md">
+
+                    <i>First Name</i>: {{patron.firstName}}
+                </div><br>
+                <div cds-text="body light" cds-layout="p-y:md">
+
+                    <i>Last Name</i>: {{patron.lastName}}<br>
+                </div><br>
+
+                <div cds-text="body light" cds-layout="p-y:md">
+
+                    <i>Phone Number</i>: {{patron.phoneNumber}}<br>
+                </div><br>
+
+                <div cds-text="body light" cds-layout="p-y:md">
+
+                    <i>Score</i>: {{patron.score}}<br>
+                </div><br>
+
+                <div cds-text="body light" cds-layout="p-y:md">
+
+                    <i>Nr. Books Allowed</i>: {{patron.nrBooksAllowed}}<br>
+                </div><br>
+
+                <cds-divider cds-card-remove-margin></cds-divider>
+                <br>
+                <div cds-layout="horizontal gap:sm p-y:sm align:vertical-center">
+                    <cds-button action="flat-inline">
+                        <a routerLink="editPatron/{{patron.id}}" class="nav-link nav-text">Edit</a>
+                    </cds-button> &nbsp;&nbsp;
+                    <cds-button action="flat-inline">
+                        <a routerLink="manageBooksBorrowed/{{patron.id}}" class="nav-link nav-text">Manage Books Borrowed</a>
+                    </cds-button>
+                </div>
+                <br>
+            </div>
+        </cds-card><br>
+    </div>
+</div>

@@ -1,9 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Genre } from '../model/genre.model';
-import { GenreService } from '../service/genre.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Genre } from '../../model/genre.model';
+import { GenreService } from '../../service/genre.service';
 
 @Component({
   selector: 'app-add-edit-genre',
@@ -12,7 +12,7 @@ import { GenreService } from '../service/genre.service';
 })
 export class AddEditGenreComponent implements OnInit {
 
- 
+
   public idGenre: number = -1;
   public isAddMode: boolean = false;
   public genre: Genre = {} as Genre;
@@ -20,10 +20,12 @@ export class AddEditGenreComponent implements OnInit {
 
   public form = this.formBuilder.group({
     name: ['', Validators.required],
-   
+
   });
 
-  constructor(private formBuilder: FormBuilder, private genreService: GenreService, private route: ActivatedRoute) { }
+  constructor(private formBuilder: FormBuilder, private router: Router, private genreService: GenreService, private route: ActivatedRoute) { }
+  
+  get f() { return this.form.controls; }
 
   ngOnInit(): void {
     this.idGenre = this.route.snapshot.params['id'];
@@ -40,8 +42,11 @@ export class AddEditGenreComponent implements OnInit {
   }
 
   public onSubmit() {
-    this.submitted = true;
+     this.submitted = true;
 
+    if (this.form.invalid) {
+        return;
+    }
     if (this.isAddMode) {
       this.onAddGenre();
     } else {
@@ -53,7 +58,7 @@ export class AddEditGenreComponent implements OnInit {
     this.genre.name = this.form.get("name")?.value;
     this.genreService.addGenre(this.genre).subscribe(
       (response: any) => {
-        console.log(this.genre);
+        this.router.navigate(['books/genres'])
       },
       (error: HttpErrorResponse) => {
         console.log(error.message);
@@ -63,7 +68,7 @@ export class AddEditGenreComponent implements OnInit {
 
   public onUpdateGenre(): void {
     this.genre.name = this.form.get("name")?.value;
-   
+
 
     this.genreService.updateGenre(this.genre).subscribe(
       (response: any) => {
