@@ -41,18 +41,6 @@ export class AddEditBookComponent implements OnInit {
     genres: [''],
   });
 
-
-  public getGenres(): void {
-    this.genreService.getGenres().subscribe(
-      (response: Genre[]) => {
-        this.genres = response;
-      },
-      (error: HttpErrorResponse) => {
-
-      }
-    )
-  }
-
   get isbnGroupsArray(): FormGroup[] {
     console.log(this.ISBNS.controls as FormGroup[])
     return this.ISBNS.controls as FormGroup[];
@@ -69,6 +57,10 @@ export class AddEditBookComponent implements OnInit {
     this.ISBNS.push(isbnForm);
   }
 
+  isISBNEmpty(index: number): boolean {
+    return this.form.get("isbns")?.value[index].isbn.length == 0;
+  }
+
   public getAuthors(): void {
     this.authorService.getAuthors().subscribe(
       (response: Author[]) => {
@@ -81,9 +73,29 @@ export class AddEditBookComponent implements OnInit {
       }
     )
   }
+
   public compareAuthors(item1: Author, item2: Author): boolean {
     console.log(item1.id);
     return item1.id === item2.id;
+  }
+
+  onAuthorChange(event?: any) {
+    this.book.author = this.authors[event.target.options.selectedIndex];
+  }
+
+  public getGenres(): void {
+    this.genreService.getGenres().subscribe(
+      (response: Genre[]) => {
+        this.genres = response;
+      },
+      (error: HttpErrorResponse) => {
+
+      }
+    )
+  }
+
+  onGenreSwitch(event: any, index: number) {
+    this.genres[index].checked = event.target.checked;
   }
 
   get f() { return this.form.controls; }
@@ -127,17 +139,6 @@ export class AddEditBookComponent implements OnInit {
   }
 
 
-  onGenreSwitch(event: any, index: number) {
-    this.genres[index].checked = event.target.checked;
-  }
-
-  onAuthorChange(event?: any) {
-    this.book.author = this.authors[event.target.options.selectedIndex];
-  }
-
-  isISBNEmpty(index: number): boolean {
-    return this.form.get("isbns")?.value[index].isbn.length == 0;
-  }
 
   public findInvalidControls() {
     const invalid = [];

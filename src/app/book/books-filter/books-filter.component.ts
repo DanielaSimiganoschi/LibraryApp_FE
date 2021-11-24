@@ -1,4 +1,13 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Author } from 'src/app/model/author.model';
+import { Book } from 'src/app/model/book.model';
+import { Genre } from 'src/app/model/genre.model';
+import { AuthorService } from 'src/app/service/author.service';
+import { BookService } from 'src/app/service/book.service';
+import { GenreService } from 'src/app/service/genre.service';
 
 @Component({
   selector: 'app-books-filter',
@@ -7,9 +16,88 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BooksFilterComponent implements OnInit {
 
-  constructor() { }
+
+  public books: Book[] = [];
+  public genres: Genre[] = [];
+  public authors: Author[] = [];
+  public booksAuthorFiltered: Book[] = [];
+  public booksGenreFiltered: Book[] = [];
+
+  constructor(private formBuilder: FormBuilder, private genreService: GenreService, private bookService: BookService, private authorService: AuthorService, private route: ActivatedRoute,
+    private router: Router) { }
+
+  public form = this.formBuilder.group({
+    author: [''],
+    genre: [''],
+  });
 
   ngOnInit(): void {
+    this.getAuthors();
+    this.getGenres();
   }
+
+  public getGenres(): void {
+    this.genreService.getGenres().subscribe(
+      (response: Genre[]) => {
+        this.genres = response;
+      },
+      (error: HttpErrorResponse) => {
+
+      }
+    )
+  }
+
+  public getAuthors(): void {
+    this.authorService.getAuthors().subscribe(
+      (response: Author[]) => {
+        this.authors = response;
+      },
+      (error: HttpErrorResponse) => {
+
+      }
+    )
+  }
+
+  public onSubmit() {
+
+    console.log(this.form.get("author")?.value.id);
+    console.log(this.form.get("genre")?.value.id);
+
+    if (this.form.get("author")?.value.id) {
+      this.bookService.filterByAuthor(this.form.get("author")?.value.id).subscribe(
+        (response: Book[]) => {
+          this.booksAuthorFiltered = response;
+        },
+        (error: HttpErrorResponse) => {
+        }
+      )
+    }
+
+    if (this.form.get("genre")?.value.id) {
+      this.bookService.filterByAuthor(this.form.get("genre")?.value.id).subscribe(
+        (response: Book[]) => {
+          this.booksGenreFiltered = response;
+        },
+        (error: HttpErrorResponse) => {
+        }
+      )
+    }
+
+    if (this.form.get("author")?.value.id && this.form.get("genre")?.value.id){
+    this.books = this.booksGenreFiltered.filter(value => this.booksAuthorFiltered.includes(value));
+  } else if(this.form.get("author")?.value.id){
+    this.books = this.booksAuthorFiltered;
+  } else if (this.form.get("genre")?.value.id){
+    this.books = this.booksGenreFiltered;
+  } else {
+    this.bookService.getBooks().subscribe(
+      (response: Book[]) => {
+        this.books = response;
+      },
+      (error: HttpErrorResponse) => {
+      }
+    )
+  }
+}
 
 }

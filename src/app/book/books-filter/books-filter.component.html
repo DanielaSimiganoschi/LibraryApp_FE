@@ -1,0 +1,27 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" id="formFilterBooks" class="clr-form clr-form-horizontal">
+
+    <div class="clr-form-control">
+        <label for="author" class="clr-control-label">Author</label>
+        <div class="clr-control-container">
+            <select formControlName="author" class="form-control" clrSelect name="author">
+                <option *ngFor="let author of authors; let a=index" [ngValue]="author">{{author.firstName}}
+                    {{author.lastName}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="clr-form-control">
+        <label for="genre" class="clr-control-label">Genre</label>
+        <div class="clr-control-container">
+            <select formControlName="genre" class="form-control" clrSelect name="genre">
+                <option *ngFor="let genre of genres; let a=index" [ngValue]="genre">{{genre.name}}
+                 </option>
+            </select>
+        </div>
+    </div>
+
+
+    <div class="btn-group btn-primary">
+        <button type="submit" class="btn">Add</button>
+    </div>
+</form>
