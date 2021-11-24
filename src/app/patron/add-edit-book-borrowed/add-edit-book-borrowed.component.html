@@ -1,32 +1,24 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" id="formAddBookBorrowed" class="clr-form clr-form-horizontal">
 
-    <div *ngIf="isAddMode" class="clr-form-control">
-        <label for="title" class="clr-control-label">Select Title</label>
-        <select  (change)="getISBNS($event)" class="form-control" formControlName="book" name="book">
+    <div class="clr-form-control">
+        <label for="title" class="clr-control-label">Select Book</label>
+        <select (change)="getISBNS($event)" class="form-control" formControlName="book" name="book">
             <option *ngFor="let book of books; let a=index" [ngValue]="book">{{book.title}}</option>
         </select>
     </div>
-    
-    <!-- <div  *ngIf="isAddMode" class="clr-form-control">
-        <label for="isbn" class="clr-control-label">Select ISBN</label>
-        <div class="clr-control-container">
-            <select id="isbn" autocomplete formControlName="isbn" (change)="onISBNChange($event)" class="form-control" clrSelect name="isbn">
+    <div *ngIf="submitted && f.book.errors">
+        <div *ngIf="f.book.errors?.required">Book is required</div>
+    </div>
+
+    <div class="clr-form-control">
+        <clr-datalist-container>
+            <label for="isbn" class="clr-control-label">Select ISBN</label>
+            <input formControlName="isbn" clrDatalistInput placeholder="No label" name="isbn" />
+            <datalist ngDefaultControl id="isbn">
                 <option *ngFor="let isbn of isbns; let a=index" [value]="isbn.isbn">{{isbn.isbn}}</option>
-            </select>
-        </div>
-    </div> -->
-
-    <div *ngIf="isAddMode" class="clr-form-control">
-    <clr-datalist-container>
-        <label for="isbn" class="clr-control-label">Select ISBN</label>
-        <input formControlName="isbn" clrDatalistInput  placeholder="No label"name="isbn" />
-        <datalist ngDefaultControl id="isbn"  >
-            <!-- <option *ngFor="let isbn of isbns; let a=index" [value]="isbn.isbn">{{isbn.isbn}}</option> -->
-            <option [value]="'blabla'"> </option>
-        </datalist>
-      </clr-datalist-container>
-      </div>
-
+            </datalist>
+        </clr-datalist-container>
+    </div>
     <div *ngIf="checkISBSLength() && form.get('book')?.touched">
         Oops! No ISBNS available for this book.
     </div>

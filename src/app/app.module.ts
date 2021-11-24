@@ -36,17 +36,7 @@ import { PatronModule } from './patron/patron.module';
     ReactiveFormsModule,
     ClrIconModule,
     CdsModule,
-    RouterModule.forChild([
-      {
-        path: "books",
-        loadChildren: () => import('./book/book.module').then(m => m.BookModule)
-      },
-      {
-        path:"patrons",
-        loadChildren:() => PatronModule
-      }
-    ])
-
+  
   ],
   providers: [AuthInterceptorProvider, AuthGuard,  { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService],

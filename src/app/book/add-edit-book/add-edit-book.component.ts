@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Author } from '../../model/author.model';
 import { Book } from '../../model/book.model';
 import { Genre } from '../../model/genre.model';
@@ -37,9 +37,10 @@ export class AddEditBookComponent implements OnInit {
     publishedDate: ['', Validators.required],
     author: ['', [Validators.required]],
     quantity: ['', [Validators.required]],
-    isbns: [[], [Validators.required]],
-    genres: ['', [Validators.required]],
+    isbns: this.formBuilder.array([]),
+    genres: [''],
   });
+
 
   public getGenres(): void {
     this.genreService.getGenres().subscribe(
@@ -52,14 +53,28 @@ export class AddEditBookComponent implements OnInit {
     )
   }
 
+  get isbnGroupsArray(): FormGroup[] {
+    console.log(this.ISBNS.controls as FormGroup[])
+    return this.ISBNS.controls as FormGroup[];
+  }
 
+  get ISBNS() {
+    return this.form.controls["isbns"] as FormArray;
+  }
+
+  addISBN(): void {
+    const isbnForm = this.formBuilder.group({
+      isbn: ['', Validators.compose([Validators.required, Validators.minLength(10)])]
+    })
+    this.ISBNS.push(isbnForm);
+  }
 
   public getAuthors(): void {
     this.authorService.getAuthors().subscribe(
       (response: Author[]) => {
         this.authors = response;
         this.form.get("authors")?.setValue(response[1]);
-        console.log(this.authors);
+
       },
       (error: HttpErrorResponse) => {
 
@@ -96,30 +111,21 @@ export class AddEditBookComponent implements OnInit {
           this.book.genres = this.genres;
 
           this.form.patchValue(x);
-          console.log(this.form);
-          this.createRange();
         });
     }
 
+
     this.form.get("quantity")?.valueChanges.subscribe((quantity) => {
-      this.form.get("isbns")?.setValue(new Array(this.form.get("quantity")?.value).fill(Object.assign({},{
-        isbn:""
-      })));
 
       for (let i = 0; i < quantity; i++) {
-        let isbnA: ISBN = {} as ISBN;
-        this.isbnsA.push(isbnA);
+        this.addISBN();
       }
+      this.form.updateValueAndValidity();
+      console.log(this.ISBNS.controls)
+
     });
   }
 
-
-  createRange(event?: any) {
-
-    if (this.idBook) {
-      this.form.get("isbns")?.setValue(this.book.isbns);
-    }
-  }
 
   onGenreSwitch(event: any, index: number) {
     this.genres[index].checked = event.target.checked;
@@ -133,30 +139,28 @@ export class AddEditBookComponent implements OnInit {
     return this.form.get("isbns")?.value[index].isbn.length == 0;
   }
 
-  updateISBNS(event: any, index: number) {
-    const isbns = this.form.get("isbns")?.value;
-    if (!this.isAddMode) {
-      console.log(isbns);
-      isbns[index].isbn = event.target.value;
-      this.form.get("isbns")?.setValue(isbns);
-
-    } else {
-      console.log(this.isbnsA);
-      isbns[index].isbn = event.target.value;
-      this.form.get("isbns")?.setValue(isbns);
-
+  public findInvalidControls() {
+    const invalid = [];
+    const controls = this.form.controls;
+    for (const name in controls) {
+      if (controls[name].invalid) {
+        invalid.push(name);
+      }
     }
+    return invalid;
   }
 
 
   public onSubmit() {
-    console.log(this.form.get("genres")?.value)
+    console.log(this.form)
     this.submitted = true;
 
     if (this.form.invalid) {
+      console.log(this.findInvalidControls());
       return;
-    }
+    } else {
 
+    }
 
     if (this.isAddMode) {
       this.onAddBook();
@@ -169,14 +173,12 @@ export class AddEditBookComponent implements OnInit {
 
     this.book.title = this.form.get("title")?.value;
     this.book.description = this.form.get("description")?.value;
-    this.book.isbns = this.isbnsA;
+    this.book.isbns = this.form.get("isbns")?.value;
     this.book.quantity = this.form.get("quantity")?.value;
     this.book.publishedDate = this.form.get("publishedDate")?.value;
 
     let genresSelected: Genre[] = [];
 
-
-    console.log(this.book.isbns);
     this.genres.forEach((element: any, index: number) => {
       let genre: Genre = {} as Genre;
       if (element.checked === true) {
@@ -223,7 +225,6 @@ export class AddEditBookComponent implements OnInit {
         console.log(error.message);
       }
     )
-
   }
 }
 

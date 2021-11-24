@@ -8,7 +8,6 @@ import { AppUserService } from './service/app-user.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'LibraryApp-FE';
 
   constructor(private authService:AppUserService){}
 

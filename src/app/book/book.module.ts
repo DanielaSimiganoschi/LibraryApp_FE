@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CdsModule } from '@cds/angular';
 import { ClarityModule, ClrIconModule } from '@clr/angular';
 import { AddIsbnComponent } from './add-isbn/add-isbn.component';
+import { BooksFilterComponent } from './books-filter/books-filter.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { AddIsbnComponent } from './add-isbn/add-isbn.component';
     GenresAllComponent,
     AddEditGenreComponent,
     AddIsbnComponent,
+    BooksFilterComponent,
   ],
   imports: [
     CommonModule,

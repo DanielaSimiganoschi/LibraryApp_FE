@@ -16,24 +16,25 @@ import { PatronService } from 'src/app/service/patron.service';
 })
 export class AddEditBookBorrowedComponent implements OnInit {
 
-  public books:Book[] = [];
-  public book:Book= {} as Book;
-  public bookBorrowed:BookBorrowed= {} as BookBorrowed;
+  public books: Book[] = [];
+  public book: Book = {} as Book;
+  public bookBorrowed: BookBorrowed = {} as BookBorrowed;
   public isbns: ISBN[] = [];
-  public isbn:string = "";
+  public isbn: string = "";
   public idBookBorrowed: number = -1;
   public idPatron: number = -1;
   public isAddMode: boolean = false;
+  public submitted: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private bookService: BookService, private bookBorrowedService: BookBorrowedService,private patronService: PatronService,  private route: ActivatedRoute,
+  constructor(private formBuilder: FormBuilder, private bookService: BookService, private bookBorrowedService: BookBorrowedService, private patronService: PatronService, private route: ActivatedRoute,
     private router: Router) { }
 
   public form = this.formBuilder.group({
     book: ['', Validators.required],
-    isbn: ['', [Validators.required]]
+    isbn: ['',  Validators.compose([Validators.required, Validators.minLength(10)])]
   });
 
-
+  get f() { return this.form.controls; }
 
   public getBooks(): void {
     this.bookService.getBooks().subscribe(
@@ -47,11 +48,12 @@ export class AddEditBookBorrowedComponent implements OnInit {
       }
     )
   }
-  public getISBNS(event:any): void {
+  public getISBNS(event: any): void {
+    this.form.get("isbn")?.setValue("");
     this.bookService.getISBNSforBookId(this.form.get("book")?.value.id).subscribe(
       (response: ISBN[]) => {
         response.forEach(element => {
-          if(element.borrowed == false){
+          if (element.borrowed == false) {
             this.isbns.push(element);
           }
         });
@@ -60,17 +62,17 @@ export class AddEditBookBorrowedComponent implements OnInit {
 
       }
     )
-   
+
   }
 
- public checkISBSLength():boolean{
-if(this.isbns.length == 0){
-  return true;
-} return false;
+  public checkISBSLength(): boolean {
+    if (this.isbns.length == 0) {
+      return true;
+    } return false;
   }
 
-  onISBNChange(event:any){
-  this.isbn = event.target.value;
+  onISBNChange(event: any) {
+    this.isbn = event.target.value;
   }
 
   ngOnInit(): void {
@@ -86,67 +88,53 @@ if(this.isbns.length == 0){
           this.bookBorrowed = x;
           console.log(this.bookBorrowed)
           this.form.patchValue(x);
-      
+
         });
-  }
-
-  this.form.get("isbn")?.valueChanges.subscribe((value)=>{
-    console.log(value);
-  })
-
-
-}
-onSubmit():void{
-  if (this.isAddMode) {
-    this.onAddBookBorrowed();
-  } else {
-    this.onUpdateBookBorrowed();
-  }
-}
-
-
-public onAddBookBorrowed(): void {
-
-  this.bookBorrowed.isbn = this.isbn;
-  this.bookBorrowed.patron_id = this.idPatron;
-
-  this.patronService.addBookBorrowed(this.idPatron, this.bookBorrowed).subscribe(
-    (response: any) => {
-      console.log(this.bookBorrowed);
-    },
-    (error: HttpErrorResponse) => {
- 
     }
-  )
-}
+
+    this.form.get("isbn")?.valueChanges.subscribe((value) => {
+      console.log(value);
+    })
 
 
-public onUpdateBookBorrowed(): void {
+  }
+  onSubmit(): void {
+    this.submitted = true;
+    if (this.isAddMode) {
+      this.onAddBookBorrowed();
+    } else {
+      this.onUpdateBookBorrowed();
+    }
+  }
 
-  // this.book.id = this.idBook;
-  // let genresSelected: Genre[] = [];
+  public onAddBookBorrowed(): void {
 
-  // this.genres.forEach((element: any, index: number) => {
-  //   let genre: Genre = {} as Genre;
-  //   if (element.checked === true) {
-  //     genre.id = element.id;
-  //     genre.name = element.name;
-  //     genresSelected.push(genre);
-  //   };
-  // });
-  // this.book.genres = genresSelected;
+    this.bookBorrowed.isbn = this.form.get("isbn")?.value;
+    this.bookBorrowed.patron_id = this.idPatron;
+
+    this.patronService.addBookBorrowed(this.idPatron, this.bookBorrowed).subscribe(
+      (response: any) => {
+        console.log(this.bookBorrowed);
+      },
+      (error: HttpErrorResponse) => {
+
+      }
+    )
+  }
 
 
-  // console.log(this.book);
-  // this.bookService.updateBook(this.book).subscribe(
-  //   (response: any) => {
-  //     console.log(this.book);
-  //   },
-  //   (error: HttpErrorResponse) => {
-  //     console.log(error.message);
-  //   }
-  // )
+  public onUpdateBookBorrowed(): void {
+    this.bookBorrowed.isbn = this.form.get("isbn")?.value;
+    this.bookBorrowed.patron_id = this.idPatron;
+    this.bookBorrowed.id =  this.idBookBorrowed; 
 
-}
+    this.bookBorrowedService.updateBookBorrowed(this.bookBorrowed).subscribe(
+      (response: any) => {
+        console.log(this.bookBorrowed);
+      },
+      (error: HttpErrorResponse) => {
 
+      }
+    )
+  }
 }

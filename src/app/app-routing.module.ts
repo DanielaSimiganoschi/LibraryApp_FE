@@ -10,7 +10,19 @@ const routes: Routes = [
   
   {path:'login',component:UserAuthComponent},
   {path:'logout',component:UserAuthComponent},
-  {path:'',component:BooksAllComponent}
+  {
+    path: "books",
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./book/book.module').then(m => m.BookModule),
+
+  },
+  {
+    path:"patrons",
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./patron/patron.module').then(m => m.PatronModule)
+  },
+
+  {path:'', redirectTo:'books', pathMatch:"full"},
 ];
 
 @NgModule({

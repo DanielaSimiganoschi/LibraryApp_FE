@@ -11,17 +11,16 @@ import { GenreService } from '../../service/genre.service';
 })
 export class GenresAllComponent implements OnInit {
 
-  public idToBeDeleted:number = -1;
+  public idToBeDeleted: number = -1;
   public genres: Genre[] = [];
   public isModalVisible: boolean = false;
 
   constructor(private genreService: GenreService, private router: Router) { }
 
-
   ngOnInit(): void {
     this.getGenres();
   }
-  
+
   public getGenres(): void {
     this.genreService.getGenres().subscribe(
       (response: Genre[]) => {
@@ -35,29 +34,29 @@ export class GenresAllComponent implements OnInit {
     )
   }
 
-public deleteGenre(id:number):void{
+  public deleteGenre(id: number): void {
 
-this.idToBeDeleted = id;
+    this.idToBeDeleted = id;
 
-}
-
-public changeModalVisible(){
-  this.isModalVisible=true;
-}
-
-public confirm(){
-console.log(this.idToBeDeleted);
-  this.genreService.deleteGenre(this.idToBeDeleted).subscribe(
-    (response: any) => {
-     
-    },
-    (error: HttpErrorResponse) => {
-     console.log(error.message)
-    }
- )
- this.router.navigate(['books']);
   }
-  
+
+  public changeModalVisible() {
+    this.isModalVisible = true;
+  }
+
+  public confirm() {
+    console.log(this.idToBeDeleted);
+    this.genreService.deleteGenre(this.idToBeDeleted).subscribe(
+      (response: any) => {
+
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    )
+    this.router.navigate(['books']);
+  }
+
 }
 
 

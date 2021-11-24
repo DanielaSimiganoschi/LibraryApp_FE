@@ -56,10 +56,9 @@ export class BooksAllComponent implements OnInit {
       (error: HttpErrorResponse) => {
         console.log(error.message)
       }
-    )
-    location.reload();
+    );
+   
+    //const res = this.books.filter(obj => obj.id !== this.idToBeDeleted);
   }
-
-
 
 }

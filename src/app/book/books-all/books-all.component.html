@@ -2,11 +2,10 @@
 <div style="margin-left:60px!important" class="clr-row">
     <div class="clr-col-lg-4 clr-col-12">
         <a routerLink="addBook"><button class="btn">Add Book</button></a>
+        <a routerLink="filterBooks"><button class="btn">Filter Books</button></a>
         <a routerLink="genres"><button class="btn">Genres</button></a>
-        <a routerLink="isbns"><button class="btn">ISBNS</button></a>
     </div>
 </div>
-
 
 <br>
 <div style="margin-left:60px!important" class="clr-row">
@@ -35,7 +34,7 @@
                         <a routerLink="editBook/{{book.id}}" class="nav-link nav-text">Edit</a>
                     </cds-button> &nbsp;&nbsp;
                     <cds-button action="flat-inline">
-                        <a routerLink="addISBNS/{{book.id}}" class="nav-link nav-text">Add ISBN</a>
+                        <a routerLink="addIsbnsForBook/{{book.id}}" class="nav-link nav-text">Add ISBNS</a>
                     </cds-button> &nbsp;&nbsp;
                     <cds-button action="flat-inline">
                         &nbsp;  &nbsp;   <a  href="javascript:void(0);" (click)="changeModalVisible();deleteBook(book.id)"  class="nav-link nav-text">Delete Book</a>
