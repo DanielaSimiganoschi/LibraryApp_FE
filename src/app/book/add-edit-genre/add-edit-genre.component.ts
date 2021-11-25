@@ -24,7 +24,7 @@ export class AddEditGenreComponent implements OnInit {
   });
 
   constructor(private formBuilder: FormBuilder, private router: Router, private genreService: GenreService, private route: ActivatedRoute) { }
-  
+
   get f() { return this.form.controls; }
 
   ngOnInit(): void {
@@ -42,11 +42,12 @@ export class AddEditGenreComponent implements OnInit {
   }
 
   public onSubmit() {
-     this.submitted = true;
+    this.submitted = true;
 
     if (this.form.invalid) {
-        return;
+      return;
     }
+    
     if (this.isAddMode) {
       this.onAddGenre();
     } else {

@@ -9,7 +9,6 @@ import { AddEditGenreComponent } from './add-edit-genre/add-edit-genre.component
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CdsModule } from '@cds/angular';
 import { ClarityModule, ClrIconModule } from '@clr/angular';
 import { AddIsbnComponent } from './add-isbn/add-isbn.component';

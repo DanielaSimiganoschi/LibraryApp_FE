@@ -13,7 +13,7 @@ export class PatronsAllComponent implements OnInit {
 
   public patrons: Patron[] = [];
 
-  constructor(private patronService:PatronService, private router: Router) { }
+  constructor(private patronService: PatronService, private router: Router) { }
 
   ngOnInit(): void {
     this.getPatrons();
@@ -25,7 +25,7 @@ export class PatronsAllComponent implements OnInit {
         this.patrons = response;
       },
       (error: HttpErrorResponse) => {
-       
+
       }
     )
   }

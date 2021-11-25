@@ -80,7 +80,7 @@ export class AddIsbnComponent implements OnInit {
   public onUpdateBook(): void {
 
     this.book.isbns.push(...this.form.get("isbns")?.value)
-console.log(this.book)
+    console.log(this.book)
 
     this.bookService.updateBook(this.book).subscribe(
       (response: any) => {

@@ -37,7 +37,8 @@
                         <a routerLink="addIsbnsForBook/{{book.id}}" class="nav-link nav-text">Add ISBNS</a>
                     </cds-button> &nbsp;&nbsp;
                     <cds-button action="flat-inline">
-                        &nbsp;  &nbsp;   <a  href="javascript:void(0);" (click)="changeModalVisible();deleteBook(book.id)"  class="nav-link nav-text">Delete Book</a>
+                        &nbsp; &nbsp; <a href="javascript:void(0);" (click)="changeModalVisible();deleteBook(book.id)"
+                            class="nav-link nav-text">Delete Book</a>
                     </cds-button>
                 </div>
                 <br>
@@ -49,8 +50,8 @@
         <h3 class="modal-title">Are you sure you want to delete this genre?</h3>
         <div class="modal-body">This cannot be undone.</div>
         <div class="modal-footer">
-          <button type="button" class="btn" (click)="isModalVisible = false">Cancel</button>
-          <button type="button" class="btn" (click)="confirm();isModalVisible = false">Delete</button>
+            <button type="button" class="btn" (click)="isModalVisible = false">Cancel</button>
+            <button type="button" class="btn" (click)="confirm();isModalVisible = false">Delete</button>
         </div>
-      </clr-modal>
+    </clr-modal>
 </div>

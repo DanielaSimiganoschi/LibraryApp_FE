@@ -9,14 +9,14 @@ import { AppUserService } from './service/app-user.service';
 })
 export class AppComponent {
 
-  constructor(private authService:AppUserService){}
+  constructor(private authService: AppUserService) { }
 
   isLoggedIn(): boolean {
     return this.authService.isAuthenticated();
-}
+  }
 
-ngOnInit(): void {
-  this.isLoggedIn();
-}
+  ngOnInit(): void {
+    this.isLoggedIn();
+  }
 
 }

@@ -24,7 +24,7 @@ export class AddEditPatronComponent implements OnInit {
   });
 
   constructor(private formBuilder: FormBuilder, private patronService: PatronService, private route: ActivatedRoute) { }
-  
+
   get f() { return this.form.controls; }
 
   ngOnInit(): void {
@@ -42,10 +42,10 @@ export class AddEditPatronComponent implements OnInit {
   }
 
   public onSubmit() {
-      this.submitted = true;
+    this.submitted = true;
 
     if (this.form.invalid) {
-        return;
+      return;
     }
 
     if (this.isAddMode) {

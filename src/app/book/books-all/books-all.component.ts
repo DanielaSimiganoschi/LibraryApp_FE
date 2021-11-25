@@ -57,7 +57,7 @@ export class BooksAllComponent implements OnInit {
         console.log(error.message)
       }
     );
-   
+
     //const res = this.books.filter(obj => obj.id !== this.idToBeDeleted);
   }
 

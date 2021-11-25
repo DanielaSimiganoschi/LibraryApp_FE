@@ -11,10 +11,10 @@ import { UserAuthComponent } from './user-auth/user-auth.component';
 import { HeaderComponent } from './header/header.component';
 import { CdsModule } from '@cds/angular';
 import { AuthInterceptorProvider } from './auth.interceptor';
-import { 
-  AuthGuardService as AuthGuard 
+import {
+  AuthGuardService as AuthGuard
 } from './service/auth-guard.service';
-import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 import '@cds/core/alert/register.js';
 import { RouterModule } from '@angular/router';
@@ -36,9 +36,8 @@ import { PatronModule } from './patron/patron.module';
     ReactiveFormsModule,
     ClrIconModule,
     CdsModule,
-  
   ],
-  providers: [AuthInterceptorProvider, AuthGuard,  { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+  providers: [AuthInterceptorProvider, AuthGuard, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService],
   bootstrap: [AppComponent]
 })

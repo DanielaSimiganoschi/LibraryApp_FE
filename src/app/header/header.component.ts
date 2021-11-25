@@ -9,16 +9,16 @@ import { AppUserService } from '../service/app-user.service';
 })
 export class HeaderComponent implements OnInit {
   public isModalVisible: boolean = false;
-  constructor(private router:Router) { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  logOut(){
+  logOut() {
     localStorage.removeItem('access_token');
     this.router.navigate(['login']);
   }
-  changeModalVisible(){
-    this.isModalVisible=true;
+  changeModalVisible() {
+    this.isModalVisible = true;
   }
 }

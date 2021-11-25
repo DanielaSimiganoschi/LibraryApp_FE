@@ -22,6 +22,9 @@ export class BooksFilterComponent implements OnInit {
   public authors: Author[] = [];
   public booksAuthorFiltered: Book[] = [];
   public booksGenreFiltered: Book[] = [];
+  public resultsVisible: boolean = false;
+  public idToBeDeleted: number = -1;
+  public isModalVisible: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private genreService: GenreService, private bookService: BookService, private authorService: AuthorService, private route: ActivatedRoute,
     private router: Router) { }
@@ -58,10 +61,32 @@ export class BooksFilterComponent implements OnInit {
     )
   }
 
-  public onSubmit() {
+  public deleteBook(id: number): void {
 
-    console.log(this.form.get("author")?.value.id);
-    console.log(this.form.get("genre")?.value.id);
+    this.idToBeDeleted = id;
+
+  }
+
+  public changeModalVisible() {
+    this.isModalVisible = true;
+  }
+
+  public confirm() {
+    console.log(this.idToBeDeleted);
+    this.bookService.deleteBook(this.idToBeDeleted).subscribe(
+      (response: any) => {
+
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    );
+  }
+
+
+  public showResults() {
+
+    this.resultsVisible = true;
 
     if (this.form.get("author")?.value.id) {
       this.bookService.filterByAuthor(this.form.get("author")?.value.id).subscribe(
@@ -83,21 +108,21 @@ export class BooksFilterComponent implements OnInit {
       )
     }
 
-    if (this.form.get("author")?.value.id && this.form.get("genre")?.value.id){
-    this.books = this.booksGenreFiltered.filter(value => this.booksAuthorFiltered.includes(value));
-  } else if(this.form.get("author")?.value.id){
-    this.books = this.booksAuthorFiltered;
-  } else if (this.form.get("genre")?.value.id){
-    this.books = this.booksGenreFiltered;
-  } else {
-    this.bookService.getBooks().subscribe(
-      (response: Book[]) => {
-        this.books = response;
-      },
-      (error: HttpErrorResponse) => {
-      }
-    )
+    if (this.form.get("author")?.value.id && this.form.get("genre")?.value.id) {
+      this.books = this.booksGenreFiltered.filter(value => this.booksAuthorFiltered.includes(value));
+    } else if (this.form.get("author")?.value.id) {
+      this.books = this.booksAuthorFiltered;
+    } else if (this.form.get("genre")?.value.id) {
+      this.books = this.booksGenreFiltered;
+    } else {
+      this.bookService.getBooks().subscribe(
+        (response: Book[]) => {
+          this.books = response;
+        },
+        (error: HttpErrorResponse) => {
+        }
+      )
+    }
   }
-}
 
 }

@@ -25,7 +25,7 @@ export class UserAuthComponent implements OnInit {
   public appUsers: AppUser[] = [];
 
   constructor(private userService: AppUserService, private router: Router) {
-   
+
   }
 
   public getUsers(): void {

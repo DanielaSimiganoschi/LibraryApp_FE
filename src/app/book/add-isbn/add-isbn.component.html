@@ -1,13 +1,12 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" id="formAddISBNS" class="clr-form clr-form-horizontal">
 
-   
+
     <div class="clr-form-control">
         <label for="quantity" class="clr-control-label">Quantity</label>
         <div class="clr-control-container">
             <div class="clr-input-wrapper">
                 <input formControlName="quantity" class="form-control" [ngClass]="{ 'is-invalid': submitted }"
-                    type="number" name="quantity" id="quantity" placeholder="Number of ISBNS"
-                    class="clr-input" />
+                    type="number" name="quantity" id="quantity" placeholder="Number of ISBNS" class="clr-input" />
             </div>
         </div>
     </div>
@@ -33,7 +32,7 @@
         </div>
     </div>
 
-   
+
     <div class="btn-group btn-primary">
         <button type="submit" class="btn">Add</button>
     </div>

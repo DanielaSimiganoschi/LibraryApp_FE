@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UserAuthComponent } from './user-auth/user-auth.component';
-import { 
-  AuthGuardService as AuthGuard 
+import {
+  AuthGuardService as AuthGuard
 } from './service/auth-guard.service';
 import { BooksAllComponent } from './book/books-all/books-all.component';
 
 const routes: Routes = [
-  
-  {path:'login',component:UserAuthComponent},
-  {path:'logout',component:UserAuthComponent},
+
+  { path: 'login', component: UserAuthComponent },
+  { path: 'logout', component: UserAuthComponent },
   {
     path: "books",
     canActivate: [AuthGuard],
@@ -17,12 +17,12 @@ const routes: Routes = [
 
   },
   {
-    path:"patrons",
+    path: "patrons",
     canActivate: [AuthGuard],
     loadChildren: () => import('./patron/patron.module').then(m => m.PatronModule)
   },
 
-  {path:'', redirectTo:'books', pathMatch:"full"},
+  { path: '', redirectTo: 'books', pathMatch: "full" },
 ];
 
 @NgModule({

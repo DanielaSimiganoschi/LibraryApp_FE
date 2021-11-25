@@ -31,7 +31,7 @@ export class AddEditBookBorrowedComponent implements OnInit {
 
   public form = this.formBuilder.group({
     book: ['', Validators.required],
-    isbn: ['',  Validators.compose([Validators.required, Validators.minLength(10)])]
+    isbn: ['', Validators.compose([Validators.required, Validators.minLength(10)])]
   });
 
   get f() { return this.form.controls; }
@@ -126,7 +126,7 @@ export class AddEditBookBorrowedComponent implements OnInit {
   public onUpdateBookBorrowed(): void {
     this.bookBorrowed.isbn = this.form.get("isbn")?.value;
     this.bookBorrowed.patron_id = this.idPatron;
-    this.bookBorrowed.id =  this.idBookBorrowed; 
+    this.bookBorrowed.id = this.idBookBorrowed;
 
     this.bookBorrowedService.updateBookBorrowed(this.bookBorrowed).subscribe(
       (response: any) => {

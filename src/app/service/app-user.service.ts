@@ -7,7 +7,7 @@ import { AppUser } from '../model/app-user.model';
 import { LoginUser } from '../model/login-user.model';
 import { RoleToUser } from '../model/role-to-user.model';
 import { Role } from '../model/role.model';
-import { JwtHelperService, JwtModule } from "@auth0/angular-jwt"; 
+import { JwtHelperService, JwtModule } from "@auth0/angular-jwt";
 
 @Injectable({
   providedIn: 'root'
