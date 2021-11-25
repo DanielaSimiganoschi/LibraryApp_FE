@@ -1,8 +1,8 @@
 <form [formGroup]="form" (ngSubmit)="showResults()" id="formFilterBooks" class="clr-form clr-form-horizontal">
 
     <div class="clr-form-control">
-        <label for="author" class="clr-control-label">Author</label>
-        <div class="clr-control-container">
+        <div class="clr-select-container">
+            <label for="author" class="clr-control-label">Author</label>
             <select formControlName="author" class="form-control" clrSelect name="author">
                 <option *ngFor="let author of authors; let a=index" [ngValue]="author">{{author.firstName}}
                     {{author.lastName}}</option>
@@ -10,9 +10,10 @@
         </div>
     </div>
 
+    
     <div class="clr-form-control">
-        <label for="genre" class="clr-control-label">Genre</label>
-        <div class="clr-control-container">
+        <div class="clr-select-container">
+            <label for="genre" class="clr-control-label">Genre</label>
             <select formControlName="genre" class="form-control" clrSelect name="genre">
                 <option *ngFor="let genre of genres; let a=index" [ngValue]="genre">{{genre.name}}
                 </option>
@@ -21,12 +22,12 @@
     </div>
 
 
-    <div class="btn-group btn-primary">
+    <div  style="margin:20px;" class="btn-group btn-primary">
         <button type="submit" class="btn">Add</button>
     </div>
 </form>
 
-<div *ngIf="resultsVisible" style="margin-left:60px!important" class="clr-row">
+<div style="margin-left:60px!important" class="clr-row">
     <div class="clr-col-lg-4 clr-col-12" *ngFor="let book of books">
 
         <cds-card aria-labelledby="cardSocialPost" style="--width: 20rem">

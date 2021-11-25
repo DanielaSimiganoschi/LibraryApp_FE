@@ -39,7 +39,7 @@
 
     <div class="clr-form-control">
         <label for="author" class="clr-control-label">Author</label>
-        <div class="clr-control-container">
+        <div class="clr-select-container">
             <select [compareWith]="compareAuthors" formControlName="author" class="form-control"
                 [ngClass]="{'is-invalid': submitted}" clrSelect name="author" (change)="onAuthorChange($event)">
                 <option *ngFor="let author of authors; let a=index" [ngValue]="author">{{author.firstName}}

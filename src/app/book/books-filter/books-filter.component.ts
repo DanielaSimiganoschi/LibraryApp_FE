@@ -62,9 +62,7 @@ export class BooksFilterComponent implements OnInit {
   }
 
   public deleteBook(id: number): void {
-
     this.idToBeDeleted = id;
-
   }
 
   public changeModalVisible() {
@@ -86,12 +84,11 @@ export class BooksFilterComponent implements OnInit {
 
   public showResults() {
 
-    this.resultsVisible = true;
-
     if (this.form.get("author")?.value.id) {
       this.bookService.filterByAuthor(this.form.get("author")?.value.id).subscribe(
         (response: Book[]) => {
           this.booksAuthorFiltered = response;
+          console.log(this.booksAuthorFiltered);
         },
         (error: HttpErrorResponse) => {
         }
@@ -99,9 +96,10 @@ export class BooksFilterComponent implements OnInit {
     }
 
     if (this.form.get("genre")?.value.id) {
-      this.bookService.filterByAuthor(this.form.get("genre")?.value.id).subscribe(
+      this.bookService.filterByGenre(this.form.get("genre")?.value.id).subscribe(
         (response: Book[]) => {
           this.booksGenreFiltered = response;
+          console.log(this.booksGenreFiltered);
         },
         (error: HttpErrorResponse) => {
         }
@@ -109,19 +107,21 @@ export class BooksFilterComponent implements OnInit {
     }
 
     if (this.form.get("author")?.value.id && this.form.get("genre")?.value.id) {
-      this.books = this.booksGenreFiltered.filter(value => this.booksAuthorFiltered.includes(value));
+      this.books = this.booksGenreFiltered.filter(a => this.booksAuthorFiltered.some(b => a.id === b.id));
     } else if (this.form.get("author")?.value.id) {
-      this.books = this.booksAuthorFiltered;
+      this.books =  this.booksAuthorFiltered;
     } else if (this.form.get("genre")?.value.id) {
-      this.books = this.booksGenreFiltered;
+      this.books =  this.booksGenreFiltered;
     } else {
       this.bookService.getBooks().subscribe(
         (response: Book[]) => {
           this.books = response;
         },
         (error: HttpErrorResponse) => {
+
         }
       )
+    
     }
   }
 

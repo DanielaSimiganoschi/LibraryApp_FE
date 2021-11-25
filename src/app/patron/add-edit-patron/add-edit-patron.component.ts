@@ -83,7 +83,5 @@ export class AddEditPatronComponent implements OnInit {
         console.log(error.message);
       }
     )
-
   }
-
 }

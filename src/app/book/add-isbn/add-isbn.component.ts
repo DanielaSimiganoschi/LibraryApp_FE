@@ -26,7 +26,6 @@ export class AddIsbnComponent implements OnInit {
   });
 
 
-
   get isbnGroupsArray(): FormGroup[] {
     console.log(this.ISBNS.controls as FormGroup[])
     return this.ISBNS.controls as FormGroup[];

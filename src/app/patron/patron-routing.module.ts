@@ -17,7 +17,6 @@ const routes: Routes = [
   { path: 'manageBooksBorrowed/:idPatron/addBookBorrowed', component: AddEditBookBorrowedComponent, canActivate: [AuthGuard] },
   { path: 'manageBooksBorrowed/:idPatron/editBookBorrowed/:idBookBorrowed', component: AddEditBookBorrowedComponent, canActivate: [AuthGuard] }
 
-
 ];
 
 @NgModule({

@@ -8,13 +8,13 @@ import { AppUserService } from './app-user.service';
 })
 export class AuthGuardService implements CanActivate {
   constructor(public auth: AppUserService, public router: Router) { }
+
   canActivate(): boolean {
 
     if (!this.auth.isAuthenticated()) {
       console.log(this.auth.isAuthenticated())
       this.router.navigate(['login']);
       return false;
-      
     }
     console.log('is auth')
     return true;

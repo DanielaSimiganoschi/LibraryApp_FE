@@ -35,9 +35,7 @@ export class GenresAllComponent implements OnInit {
   }
 
   public deleteGenre(id: number): void {
-
     this.idToBeDeleted = id;
-
   }
 
   public changeModalVisible() {
