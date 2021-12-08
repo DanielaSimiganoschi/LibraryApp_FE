@@ -1,16 +1,17 @@
 <br>
-<div style="margin-left:60px!important" class="clr-row">
+<div id="options" class="clr-row">
   <div class="clr-col-lg-4 clr-col-12">
     <a routerLink="addBookBorrowed"><button [disabled]="checkButton()" class="btn">Add Book Borrowed</button></a>
-    <a routerLink="filterBooksBorrowed"><button class="btn">Filter Books Borrowed</button></a>
+  <a routerLink="booksBorrowedFilter"><button class="btn">Filter Books Borrowed</button></a>
+ 
   </div>
 </div>
 <br>
-<div style="margin-left:60px!important" class="clr-row">
+<div  class="clr-row">
   <div class="clr-col-lg-4 clr-col-12" *ngFor="let bookBorrowed of booksBorrowed">
 
     <cds-card aria-labelledby="cardSocialPost" style="--width: 15rem">
-      <div style="padding-left:10px;" cds-layout="vertical gap:md">
+      <div id="cardContentDiv"  cds-layout="vertical gap:md">
         <h2 id="cardSocialPost" cds-text="section" cds-layout="horizontal gap:sm align:vertical-center">
           Title: {{bookBorrowed.isbn}}<br>
         </h2>
@@ -41,15 +42,15 @@
         <cds-divider cds-card-remove-margin></cds-divider>
         <br>
         <div cds-layout="horizontal gap:sm p-y:sm align:vertical-center">
-          <cds-button action="flat-inline">
+          <!-- <cds-button action="flat-inline">
             <a routerLink="editBookBorrowed/{{bookBorrowed.id}}" class="nav-link nav-text">Edit</a>
-          </cds-button> &nbsp;&nbsp;
+          </cds-button> &nbsp;&nbsp; -->
           <cds-button action="flat-inline">
             &nbsp; &nbsp; <a href="javascript:void(0);"
               (click)="changeModalVisible();deleteBookBorrowed(bookBorrowed.id)" class="nav-link nav-text">Delete
               Book</a>
           </cds-button>
-          <cds-button action="flat-inline">
+          <cds-button *ngIf="!bookBorrowed.returned" action="flat-inline">
             &nbsp; &nbsp; <a href="javascript:void(0);" (click)="changeModalVisibleR();returnBook(bookBorrowed.id)"
               class="nav-link nav-text">Return Book</a>
           </cds-button>

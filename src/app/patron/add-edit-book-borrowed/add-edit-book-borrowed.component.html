@@ -19,8 +19,11 @@
             </datalist>
         </clr-datalist-container>
     </div>
-    <div *ngIf="checkISBSLength() && form.get('book')?.touched">
+    <!-- <div *ngIf="ISBNSForSelectedBook()">
         Oops! No ISBNS available for this book.
+    </div> -->
+    <div *ngIf="checkISBSLength() && form.get('book')?.touched">
+        Oops! The ISBN must have at least 10 characters.
     </div>
 
     <br><br>

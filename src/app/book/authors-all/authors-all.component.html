@@ -1,0 +1,35 @@
+<br>
+<div id="options" class="clr-row">
+    <div class="clr-col-lg-4 clr-col-12">
+        <a routerLink=""><button class="btn">Back</button></a>
+        <a routerLink="addAuthor"><button class="btn">Add Author</button></a>
+    </div>
+</div>
+
+<br>
+<div id="allAuthorsDiv" class="clr-row">
+    <div class="clr-col-lg-4 clr-col-12" *ngFor="let author of authors; let a=index">
+        <cds-card aria-labelledby="cardSocialPost" style="--width: 20rem">
+            <div id="cardContentDiv"  cds-layout="vertical gap:md">
+                <h3 id="cardWithList" cds-text="section" cds-layout="horizontal gap:sm align:vertical-center">
+                    {{author.firstName}}  {{author.lastName}}
+                </h3>
+
+                <div cds-layout="horizontal gap:sm p-y:sm align:vertical-center">
+                    <a routerLink="editAuthor/{{author.id}}" class="nav-link nav-text">Edit Author</a>
+                    &nbsp; &nbsp; <a href="javascript:void(0);" (click)="changeModalVisible();deleteAuthor(author.id)"
+                        class="nav-link nav-text">Delete Author</a>
+                </div>
+                <br>
+            </div>
+        </cds-card><br>
+    </div>
+    <clr-modal [(clrModalOpen)]="isModalVisible">
+        <h3 class="modal-title">Are you sure you want to delete this author?</h3>
+        <div class="modal-body">This cannot be undone.</div>
+        <div class="modal-footer">
+            <button type="button" class="btn" (click)="isModalVisible = false">Cancel</button>
+            <button type="button" class="btn" (click)="confirm();isModalVisible = false">Delete</button>
+        </div>
+    </clr-modal>
+</div>

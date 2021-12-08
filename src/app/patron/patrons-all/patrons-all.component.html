@@ -1,18 +1,18 @@
 <br>
-<div style="margin-left:60px!important" class="clr-row">
+<div id="options" class="clr-row">
     <div class="clr-col-lg-4 clr-col-12">
-        <a routerLink="addPatron"><button class="btn">Add Patron</button></a>
-        <a routerLink="search"><button class="btn">Search Patron</button></a>
+        <a *ngIf="isManager" routerLink="addPatron"><button class="btn">Add Patron</button></a>
+        <a routerLink="searchPatronByName"><button class="btn">Search Patron</button></a>
     </div>
 </div>
 <br>
 
 
-<div style="margin-left:60px!important" class="clr-row">
+<div id="allPatronsDiv" class="clr-row">
     <div class="clr-col-lg-4 clr-col-12" *ngFor="let patron of patrons; let a=index">
 
         <cds-card aria-labelledby="cardSocialPost" style="--width: 20rem">
-            <div style="padding-left:10px;" cds-layout="vertical gap:md">
+            <div id="cardContentDiv"  cds-layout="vertical gap:md">
 
                 <h3>{{patron.firstName}} {{patron.lastName}}</h3>
                 <cds-divider cds-card-remove-margin></cds-divider><br>
@@ -44,7 +44,7 @@
                 <cds-divider cds-card-remove-margin></cds-divider>
                 <br>
                 <div cds-layout="horizontal gap:sm p-y:sm align:vertical-center">
-                    <cds-button action="flat-inline">
+                    <cds-button *ngIf="isManager" action="flat-inline">
                         <a routerLink="editPatron/{{patron.id}}" class="nav-link nav-text">Edit</a>
                     </cds-button> &nbsp;&nbsp;
                     <cds-button action="flat-inline">

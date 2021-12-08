@@ -1,7 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { throwError } from 'rxjs';
+import { catchError, takeUntil } from 'rxjs/operators';
+import { BaseComponent } from 'src/app/base/base.component';
 import { Patron } from '../../model/patron.model';
 import { PatronService } from '../../service/patron.service';
 
@@ -10,7 +13,7 @@ import { PatronService } from '../../service/patron.service';
   templateUrl: './add-edit-patron.component.html',
   styleUrls: ['./add-edit-patron.component.css']
 })
-export class AddEditPatronComponent implements OnInit {
+export class AddEditPatronComponent extends BaseComponent implements OnInit {
 
   public idPatron: number = -1;
   public isAddMode: boolean = false;
@@ -23,7 +26,10 @@ export class AddEditPatronComponent implements OnInit {
     phoneNumber: ['', Validators.required],
   });
 
-  constructor(private formBuilder: FormBuilder, private patronService: PatronService, private route: ActivatedRoute) { }
+  constructor(private formBuilder: FormBuilder, private patronService: PatronService, private route: ActivatedRoute,
+    private router: Router) {
+    super();
+  }
 
   get f() { return this.form.controls; }
 
@@ -33,6 +39,10 @@ export class AddEditPatronComponent implements OnInit {
 
     if (!this.isAddMode) {
       this.patronService.getPatron(this.idPatron)
+        .pipe(catchError(error => {
+          return throwError(error)
+        }),
+          takeUntil(this.destroy$))
         .subscribe((patron: Patron) => {
           this.patron = patron;
           this.form.patchValue(patron);
@@ -60,14 +70,13 @@ export class AddEditPatronComponent implements OnInit {
     this.patron.lastName = this.form.get("lastName")?.value;
     this.patron.phoneNumber = this.form.get("phoneNumber")?.value;
 
-    this.patronService.addPatron(this.patron).subscribe(
-      (response: any) => {
-        console.log(this.patron);
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error.message);
-      }
-    )
+    this.patronService.addPatron(this.patron)
+      .pipe(catchError(error => {
+        return throwError(error)
+      }),
+        takeUntil(this.destroy$))
+      .subscribe()
+    this.router.navigate(['patrons'])
   }
 
   public onUpdatePatron(): void {
@@ -75,13 +84,12 @@ export class AddEditPatronComponent implements OnInit {
     this.patron.lastName = this.form.get("lastName")?.value;
     this.patron.phoneNumber = this.form.get("phoneNumber")?.value;
 
-    this.patronService.updatePatron(this.patron).subscribe(
-      (response: any) => {
-        console.log(this.patron);
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error.message);
-      }
-    )
+    this.patronService.updatePatron(this.patron)
+      .pipe(catchError(error => {
+        return throwError(error)
+      }),
+        takeUntil(this.destroy$))
+      .subscribe()
+    this.router.navigate(['patrons'])
   }
 }

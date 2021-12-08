@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { ClarityModule, ClrIconModule } from '@clr/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { UserAuthComponent } from './user-auth/user-auth.component';
 import { HeaderComponent } from './header/header.component';
 import { CdsModule } from '@cds/angular';
 import { AuthInterceptorProvider } from './auth.interceptor';
@@ -17,14 +16,15 @@ import {
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 import '@cds/core/alert/register.js';
-import { RouterModule } from '@angular/router';
-import { PatronModule } from './patron/patron.module';
+import { BaseComponent } from './base/base.component';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserAuthComponent,
     HeaderComponent,
+    BaseComponent,
+    UnauthorizedComponent
   ],
   imports: [
     BrowserModule,
@@ -32,10 +32,10 @@ import { PatronModule } from './patron/patron.module';
     ClarityModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
     ClrIconModule,
     CdsModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [AuthInterceptorProvider, AuthGuard, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService],

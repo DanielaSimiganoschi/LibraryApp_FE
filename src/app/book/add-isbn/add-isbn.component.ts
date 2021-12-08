@@ -2,7 +2,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { throwError } from 'rxjs';
+import { catchError, takeUntil } from 'rxjs/operators';
+import { BaseComponent } from 'src/app/base/base.component';
 import { Book } from 'src/app/model/book.model';
+import { ISBN } from 'src/app/model/isbn.model';
 import { BookService } from 'src/app/service/book.service';
 
 @Component({
@@ -10,14 +14,17 @@ import { BookService } from 'src/app/service/book.service';
   templateUrl: './add-isbn.component.html',
   styleUrls: ['./add-isbn.component.css']
 })
-export class AddIsbnComponent implements OnInit {
+export class AddIsbnComponent extends BaseComponent implements OnInit {
 
   public submitted: boolean = false;
   public book: Book = {} as Book;
   public idBook: number = -1;
+  public isNotUnique: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private bookService: BookService, private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router) {
+    super();
+  }
 
   public form = this.formBuilder.group({
     quantity: ['', [Validators.required]],
@@ -27,7 +34,6 @@ export class AddIsbnComponent implements OnInit {
 
 
   get isbnGroupsArray(): FormGroup[] {
-    console.log(this.ISBNS.controls as FormGroup[])
     return this.ISBNS.controls as FormGroup[];
   }
 
@@ -54,13 +60,34 @@ export class AddIsbnComponent implements OnInit {
         this.book = x;
       });
 
-    this.form.get("quantity")?.valueChanges.subscribe((quantity) => {
+    this.form.get("quantity")?.valueChanges
+      .pipe(catchError(error => {
+        return throwError(error)
+      }),
+        takeUntil(this.destroy$))
+      .subscribe((quantity) => {
+        for (let i = 0; i < quantity; i++) {
+          this.addISBN();
+        }
 
-      for (let i = 0; i < quantity; i++) {
-        this.addISBN();
-      }
+      });
+  }
 
-    });
+  checkISBN(event?: any) {
+    this.bookService.getISBNForISBNCode(event.target.value)
+      .pipe(catchError(error => {
+        return throwError(error)
+      }),
+        takeUntil(this.destroy$))
+      .subscribe(
+        (response: ISBN) => {
+          if (response == null) {
+            this.isNotUnique = false;
+          } else {
+            this.isNotUnique = true;
+          }
+
+        });
   }
 
 
@@ -73,22 +100,20 @@ export class AddIsbnComponent implements OnInit {
     }
 
     this.onUpdateBook();
-
   }
 
   public onUpdateBook(): void {
 
     this.book.isbns.push(...this.form.get("isbns")?.value)
-    console.log(this.book)
 
-    this.bookService.updateBook(this.book).subscribe(
-      (response: any) => {
-        console.log(this.book);
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error.message);
-      }
-    )
+    this.bookService.updateBook(this.book)
+      .pipe(catchError(error => {
+        return throwError(error)
+      }),
+        takeUntil(this.destroy$))
+      .subscribe();
+    this.router.navigate(['books'])
   }
+
 
 }

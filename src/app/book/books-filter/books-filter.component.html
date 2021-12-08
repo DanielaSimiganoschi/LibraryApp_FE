@@ -21,24 +21,33 @@
         </div>
     </div>
 
+    <div class="clr-form-control">
+        <label for="title" class="clr-control-label">Title</label>
+        <div class="clr-control-container">
+            <div class="clr-input-wrapper">
+                <input formControlName="title" class="form-control" [ngClass]="{ 'is-invalid': submitted}"
+                    type="text" id="title" name="title" placeholder="Title.." class="clr-input" />
+            </div>
+        </div>
+    </div>
 
     <div  style="margin:20px;" class="btn-group btn-primary">
-        <button type="submit" class="btn">Add</button>
+        <button type="submit" class="btn">Filter</button>
     </div>
 </form>
 
-<div style="margin-left:60px!important" class="clr-row">
+<div id="allBooksDiv" class="clr-row">
     <div class="clr-col-lg-4 clr-col-12" *ngFor="let book of books">
 
         <cds-card aria-labelledby="cardSocialPost" style="--width: 20rem">
-            <div style="padding-left:10px;" cds-layout="vertical gap:md">
+            <div  id="cardContentDiv" cds-layout="vertical gap:md">
                 <h2 id="cardSocialPost" cds-text="section" cds-layout="horizontal gap:sm align:vertical-center">
                     Title: {{book.title}}<br>
                 </h2>
 
                 <cds-divider cds-card-remove-margin></cds-divider><br>
 
-                <div cds-text="body light" cds-layout="p-y:md">
+                <div id="description" data-title="{{book.description}}" cds-text="body light" cds-layout="p-y:md">
 
                     <i>Description:</i> {{book.description}}<br>
                 </div><br>
@@ -52,8 +61,8 @@
                     <cds-button action="flat-inline">
                         <a routerLink="editBook/{{book.id}}" class="nav-link nav-text">Edit</a>
                     </cds-button> &nbsp;&nbsp;
-                    <cds-button action="flat-inline">
-                        <a routerLink="addIsbnsForBook/{{book.id}}" class="nav-link nav-text">Add ISBNS</a>
+                    <cds-button (click)="redirectToAddISBN(book.id)" action="flat-inline">
+                        Add ISBNS
                     </cds-button> &nbsp;&nbsp;
                     <cds-button action="flat-inline">
                         &nbsp; &nbsp; <a href="javascript:void(0);" (click)="changeModalVisible();deleteBook(book.id)"

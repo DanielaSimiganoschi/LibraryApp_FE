@@ -1,0 +1,33 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" id="formAddEditAuthor" class="clr-form clr-form-horizontal">
+    <div class="clr-form-control">
+        <label for="name" class="clr-control-label">Title</label>
+        <div class="clr-control-container">
+            <div class="clr-input-wrapper">
+                <input formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted}" type="text"
+                    id="firstName" name="firstName" placeholder="First Name.." class="clr-input" />
+            </div>
+        </div>
+    </div>
+    
+    <div *ngIf="submitted && f.firstName.errors">
+        <div *ngIf="f.firstName.errors?.required">Name is required</div>
+    </div>
+
+    <div class="clr-form-control">
+        <label for="lastName" class="clr-control-label">Title</label>
+        <div class="clr-control-container">
+            <div class="clr-input-wrapper">
+                <input formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted}" type="text"
+                    id="lastName" name="lastName" placeholder="Last Name.." class="clr-input" />
+            </div>
+        </div>
+    </div>
+    
+    <div *ngIf="submitted && f.lastName.errors">
+        <div *ngIf="f.lastName.errors?.required">Name is required</div>
+    </div>
+
+    <div class="btn-group btn-primary">
+        <button type="submit" class="btn">Save Changes</button>
+    </div>
+</form>

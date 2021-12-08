@@ -51,4 +51,13 @@ export class PatronService {
     return this.http.get<BookBorrowed[]>(`${this.apiServerURL}/patrons/findBooksNotReturned/${id}`);
   }
 
+  public searchByName(firstName?: string, lastName?: number): Observable<Patron[]> {
+    let queryParams: any = {};
+    if (firstName) queryParams.firstName = firstName;
+    if (lastName) queryParams.lastName = lastName;
+
+    return this.http.get<Patron[]>(`${this.apiServerURL}/patrons/searchByName`, {
+      params: queryParams
+    });
+  }
 }

@@ -4,19 +4,24 @@ import { Book } from '../../model/book.model';
 import { BookService } from '../../service/book.service';
 import '@cds/core/card/register.js';
 import { Router } from '@angular/router';
+import { catchError, takeUntil } from 'rxjs/operators';
+import { BaseComponent } from 'src/app/base/base.component';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-books-all',
   templateUrl: './books-all.component.html',
   styleUrls: ['./books-all.component.css']
 })
-export class BooksAllComponent implements OnInit {
+export class BooksAllComponent extends BaseComponent implements OnInit {
 
   public idToBeDeleted: number = -1;
   public isModalVisible: boolean = false;
   public books: Book[] = [];
 
-  constructor(private bookService: BookService, private router: Router) { }
+  constructor(private bookService: BookService, private router: Router) {
+    super();
+  }
 
 
   ngOnInit(): void {
@@ -24,23 +29,20 @@ export class BooksAllComponent implements OnInit {
   }
 
   public getBooks(): void {
-    this.bookService.getBooks().subscribe(
-      (response: Book[]) => {
-        this.books = response;
-        console.log(this.books[0].isbns)
-      },
-      (error: HttpErrorResponse) => {
-        if (error.status === 403) {
-          this.router.navigate(['/login']);
-        }
-      }
-    )
+    this.bookService.getBooks()
+      .pipe(
+        catchError(error => {
+          return throwError(error)
+        }),
+        takeUntil(this.destroy$))
+      .subscribe(
+        (response: Book[]) => {
+          this.books = response;
+        });
   }
 
   public deleteBook(id: number): void {
-
     this.idToBeDeleted = id;
-
   }
 
   public changeModalVisible() {
@@ -48,17 +50,14 @@ export class BooksAllComponent implements OnInit {
   }
 
   public confirm() {
-    console.log(this.idToBeDeleted);
-    this.bookService.deleteBook(this.idToBeDeleted).subscribe(
-      (response: any) => {
+    this.bookService.deleteBook(this.idToBeDeleted)
+      .pipe(
+        catchError(error => {
+          return throwError(error)
+        }),
+        takeUntil(this.destroy$))
+      .subscribe();
 
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error.message)
-      }
-    );
-
-    //const res = this.books.filter(obj => obj.id !== this.idToBeDeleted);
   }
 
 }

@@ -1,25 +1,26 @@
 <br>
-<div style="margin-left:60px!important" class="clr-row">
+<div id="options" class="clr-row">
     <div class="clr-col-lg-4 clr-col-12">
         <a routerLink="addBook"><button class="btn">Add Book</button></a>
         <a routerLink="filterBooks"><button class="btn">Filter Books</button></a>
         <a routerLink="genres"><button class="btn">Genres</button></a>
+        <a routerLink="authors"><button class="btn">Authors</button></a>
     </div>
 </div>
 
 <br>
-<div style="margin-left:60px!important" class="clr-row">
-    <div class="clr-col-lg-4 clr-col-12" *ngFor="let book of books">
+<div id="allBooksDiv" class="clr-row clr-justify-content-around">
+    <div class="clr-col-lg-4 clr-col-12 " *ngFor="let book of books">
 
         <cds-card aria-labelledby="cardSocialPost" style="--width: 20rem">
-            <div style="padding-left:10px;" cds-layout="vertical gap:md">
+            <div id="cardContentDiv" cds-layout="vertical gap:md">
                 <h2 id="cardSocialPost" cds-text="section" cds-layout="horizontal gap:sm align:vertical-center">
                     Title: {{book.title}}<br>
                 </h2>
 
                 <cds-divider cds-card-remove-margin></cds-divider><br>
 
-                <div cds-text="body light" cds-layout="p-y:md">
+                <div id="description" data-title="{{book.description}}" cds-text="body light" cds-layout="p-y:md">
 
                     <i>Description:</i> {{book.description}}<br>
                 </div><br>

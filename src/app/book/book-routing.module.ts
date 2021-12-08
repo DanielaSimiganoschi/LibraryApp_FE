@@ -4,11 +4,10 @@ import { AddEditBookComponent } from './add-edit-book/add-edit-book.component';
 import { AddEditGenreComponent } from './add-edit-genre/add-edit-genre.component';
 import { BooksAllComponent } from './books-all/books-all.component';
 import { GenresAllComponent } from './genres-all/genres-all.component';
-import {
-  AuthGuardService as AuthGuard
-} from '../service/auth-guard.service';
 import { AddIsbnComponent } from './add-isbn/add-isbn.component';
 import { BooksFilterComponent } from './books-filter/books-filter.component';
+import { AuthorsAllComponent } from './authors-all/authors-all.component';
+import { AddEditAuthorComponent } from './add-edit-author/add-edit-author.component';
 
 
 
@@ -22,6 +21,9 @@ const routes: Routes = [
   { path: 'genres/editGenre/:id', component: AddEditGenreComponent },
   { path: 'addIsbnsForBook/:id', component: AddIsbnComponent },
   { path: 'filterBooks', component: BooksFilterComponent },
+  { path: 'authors', component: AuthorsAllComponent },
+  { path: 'authors/addAuthor', component: AddEditAuthorComponent },
+  { path: 'authors/editAuthor/:id', component: AddEditAuthorComponent },
 
 ];
 
