@@ -13,8 +13,7 @@ import { AppUserService } from '../../service/app-user.service';
 
 @Component({
   selector: 'app-user-create',
-  templateUrl: './user-create.component.html',
-  styleUrls: ['./user-create.component.css']
+  templateUrl: './user-create.component.html'
 })
 
 
@@ -131,11 +130,9 @@ export class UserCreateComponent extends BaseComponent implements OnInit {
   }
 
   public onUpdateUser() {
+    this.user = this.form.value;
     this.user.id = this.idUser;
-    this.user.name = this.form.get("name")?.value;
-    this.user.username = this.form.get("username")?.value;
-    this.user.password = this.form.get("password")?.value;
-    this.user.role = this.form.get("role")?.value;
+
     this.appUserService.updateUser(this.user)
       .pipe(catchError(error => {
         return throwError(error)

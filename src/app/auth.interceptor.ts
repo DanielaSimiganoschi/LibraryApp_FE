@@ -15,17 +15,6 @@ import { catchError, switchMap, filter, take } from 'rxjs/operators';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  // constructor() { }
-
-  // intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-
-  //   request = request.clone({
-  //     headers: request.headers.set('authorization', 'Bearer ' + localStorage.getItem('access_token'),)
-  //   })
-  //   return next.handle(request);
-  // }
-
-
   private isRefreshing = false;
   private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 

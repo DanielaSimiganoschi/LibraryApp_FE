@@ -66,9 +66,8 @@ export class AddEditPatronComponent extends BaseComponent implements OnInit {
   }
 
   public onAddPatron(): void {
-    this.patron.firstName = this.form.get("firstName")?.value;
-    this.patron.lastName = this.form.get("lastName")?.value;
-    this.patron.phoneNumber = this.form.get("phoneNumber")?.value;
+    
+    this.patron = this.form.value;
 
     this.patronService.addPatron(this.patron)
       .pipe(catchError(error => {

@@ -19,7 +19,7 @@ export class AddIsbnComponent extends BaseComponent implements OnInit {
   public submitted: boolean = false;
   public book: Book = {} as Book;
   public idBook: number = -1;
-  public isNotUnique: boolean = false;
+  public isISBNUnique: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private bookService: BookService, private route: ActivatedRoute,
     private router: Router) {
@@ -82,9 +82,9 @@ export class AddIsbnComponent extends BaseComponent implements OnInit {
       .subscribe(
         (response: ISBN) => {
           if (response == null) {
-            this.isNotUnique = false;
+            this.isISBNUnique = false;
           } else {
-            this.isNotUnique = true;
+            this.isISBNUnique = true;
           }
 
         });

@@ -9,8 +9,7 @@ import { AppUserService } from 'src/app/service/app-user.service';
 
 @Component({
   selector: 'app-users-all',
-  templateUrl: './users-all.component.html',
-  styleUrls: ['./users-all.component.css']
+  templateUrl: './users-all.component.html'
 })
 export class UsersAllComponent extends BaseComponent implements OnInit {
 

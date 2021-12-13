@@ -26,10 +26,8 @@ export class PatronsAllComponent extends BaseComponent implements OnInit {
   public isManager: boolean = this.appUser.hasManagerRights();
 
   changeStatus(): void {
-    setTimeout(() => {
-      this.status = true;
-      this._cdr.detectChanges()
-    }, 1500);
+    this.status = true;
+    this._cdr.detectChanges()
   }
 
   ngOnInit(): void {

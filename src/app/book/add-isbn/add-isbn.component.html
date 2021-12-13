@@ -24,7 +24,7 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="this.isNotUnique">This isbn is already used.</div>
+            <div *ngIf="this.isISBNUnique">This isbn is already used.</div>
             <div *ngIf="submitted">
                 <div *ngIf="isbnGroup.get('isbn')?.errors?.required">Quantity is required</div>
                 <div *ngIf="isbnGroup.get('isbn')?.errors?.minlength">ISBN should have at least 10 Characters.</div>

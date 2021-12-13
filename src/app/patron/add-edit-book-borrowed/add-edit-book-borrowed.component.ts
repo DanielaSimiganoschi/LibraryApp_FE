@@ -74,16 +74,11 @@ export class AddEditBookBorrowedComponent extends BaseComponent implements OnIni
 
   }
   public ISBNSForSelectedBook(): boolean {
-    if (this.isbns.length == 0) {
-      return false;
-    }
-    return true;
+    return this.isbns.length === 0;
   }
 
   public checkISBSLength(): boolean {
-    if (this.form.get("isbn")?.value.length < 10) {
-      return true;
-    } return false;
+   return this.form.get("isbn")?.value.length < 10;
   }
 
   onISBNChange(event: any) {

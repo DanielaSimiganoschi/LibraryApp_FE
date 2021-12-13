@@ -86,16 +86,16 @@ export class AddEditBookComponent extends BaseComponent implements OnInit {
 
   public getAuthors(): void {
     this.authorService.getAuthors()
-    .pipe(catchError(error => {
-      return throwError(error)
-    }),
-      takeUntil(this.destroy$))
-    .subscribe(
-      (response: Author[]) => {
-        this.authors = response;
-        this.form.get("authors")?.setValue(response[1]);
+      .pipe(catchError(error => {
+        return throwError(error)
+      }),
+        takeUntil(this.destroy$))
+      .subscribe(
+        (response: Author[]) => {
+          this.authors = response;
+          this.form.get("authors")?.setValue(response[1]);
 
-      })
+        })
   }
 
   public compareAuthors(item1: Author, item2: Author): boolean {
@@ -152,11 +152,11 @@ export class AddEditBookComponent extends BaseComponent implements OnInit {
 
 
     this.form.get("quantity")?.valueChanges
-    .pipe(catchError(error => {
-      return throwError(error)
-    }),
-      takeUntil(this.destroy$))
-    
+      .pipe(catchError(error => {
+        return throwError(error)
+      }),
+        takeUntil(this.destroy$))
+
       .subscribe((quantity) => {
 
         for (let i = 0; i < quantity; i++) {
@@ -214,12 +214,7 @@ export class AddEditBookComponent extends BaseComponent implements OnInit {
 
   public onUpdateBook(): void {
 
-    this.book.title = this.form.get("title")?.value;
-    this.book.description = this.form.get("description")?.value;
-    this.book.isbns = this.form.get("isbns")?.value;
-    this.book.quantity = this.form.get("quantity")?.value;
-    this.book.publishedDate = this.form.get("publishedDate")?.value;
-
+    this.book = this.form.value;
     this.book.id = this.idBook;
     let genresSelected: Genre[] = [];
 

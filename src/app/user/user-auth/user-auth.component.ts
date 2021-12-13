@@ -28,7 +28,6 @@ export class UserAuthComponent extends BaseComponent implements OnInit {
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
   private readonly TOKEN_NAME = 'access_token';
   private readonly REFRESH_TOKEN_NAME = 'refresh_token';
-  isLoggedIn$ = this._isLoggedIn$.asObservable();
 
   get token() {
     return localStorage.getItem('access_token');
@@ -64,8 +63,6 @@ export class UserAuthComponent extends BaseComponent implements OnInit {
         takeUntil(this.destroy$))
       .subscribe(
         (response: any) => {
-
-          this._isLoggedIn$.next(true);
 
           localStorage.setItem('user', response);
           localStorage.setItem(this.TOKEN_NAME, response[this.TOKEN_NAME]);
