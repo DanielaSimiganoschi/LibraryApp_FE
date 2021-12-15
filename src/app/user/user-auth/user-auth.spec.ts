@@ -54,7 +54,7 @@ describe('UserAuthComponent', () => {
         comp.form.controls['username'].setValue('dsimiganoschi');
         comp.form.controls['password'].setValue('1244');
         let btn = fixture.debugElement.query(By.css('button[type=submit]')).nativeElement;
-        btn.triggerEventHandler('click', {});
+        btn.click();
         tick();
         fixture.detectChanges();
         expect(comp.onLoginUser).toHaveBeenCalled();
