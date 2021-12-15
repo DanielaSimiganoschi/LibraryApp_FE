@@ -9,13 +9,10 @@ import { UserAuthComponent } from '../user/user-auth/user-auth.component';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent{
   public isModalVisible: boolean = false;
   constructor(private router: Router, private appUserService: AppUserService, private jwtHelper: JwtHelperService) { }
   public isAdmin: boolean = this.appUserService.isAdmin();
-
-  ngOnInit(): void {
-  }
 
   public logOut() {
     this.appUserService.logOut();

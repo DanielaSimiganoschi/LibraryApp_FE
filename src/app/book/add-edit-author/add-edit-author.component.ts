@@ -5,13 +5,11 @@ import { throwError } from 'rxjs';
 import { catchError, takeUntil } from 'rxjs/operators';
 import { BaseComponent } from 'src/app/base/base.component';
 import { Author } from 'src/app/model/author.model';
-import { Genre } from 'src/app/model/genre.model';
 import { AuthorService } from 'src/app/service/author.service';
 
 @Component({
   selector: 'app-add-edit-author',
-  templateUrl: './add-edit-author.component.html',
-  styleUrls: ['./add-edit-author.component.css']
+  templateUrl: './add-edit-author.component.html'
 })
 export class AddEditAuthorComponent extends BaseComponent implements OnInit {
 

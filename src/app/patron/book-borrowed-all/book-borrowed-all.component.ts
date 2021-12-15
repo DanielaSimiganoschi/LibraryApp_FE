@@ -76,18 +76,12 @@ export class BookBorrowedAllComponent extends BaseComponent implements OnInit {
 
   public returnBook(id: number): void {
     this.idToBeReturned = id;
+    this.isModalVisibleR = true;
   }
 
   public deleteBookBorrowed(id: number): void {
-    this.idToBeDeleted = id;
-  }
-
-  public changeModalVisible() {
     this.isModalVisible = true;
-  }
-
-  public changeModalVisibleR() {
-    this.isModalVisibleR = true;
+    this.idToBeDeleted = id;
   }
 
   public confirm() {

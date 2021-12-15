@@ -59,13 +59,13 @@
                     </cds-button> &nbsp;&nbsp;
                     <cds-button action="flat-inline">
                         &nbsp; &nbsp; <a href="javascript:void(0);"
-                            (click)="changeModalVisible();deleteBookBorrowed(bookBorrowed.id)"
+                            (click)="deleteBookBorrowed(bookBorrowed.id)"
                             class="nav-link nav-text">Delete
                             Book</a>
                     </cds-button>
                     <cds-button *ngIf="!bookBorrowed.returned" action="flat-inline">
                         &nbsp; &nbsp; <a href="javascript:void(0);"
-                            (click)="changeModalVisibleR();returnBook(bookBorrowed.id)" class="nav-link nav-text">Return
+                            (click)="returnBook(bookBorrowed.id)" class="nav-link nav-text">Return
                             Book</a>
                     </cds-button>
                 </div>

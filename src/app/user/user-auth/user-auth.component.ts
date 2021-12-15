@@ -17,15 +17,18 @@ import { AppUserService } from '../../service/app-user.service';
   templateUrl: './user-auth.component.html',
   styleUrls: ['./user-auth.component.css']
 })
-export class UserAuthComponent extends BaseComponent implements OnInit {
+
+
+export class UserAuthComponent extends BaseComponent {
+
+
 
   public form = this.formBuilder.group({
     username: ['', Validators.required],
     password: ['', Validators.required],
   });
 
-
-  private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
+  public isSubmitted = false;
   private readonly TOKEN_NAME = 'access_token';
   private readonly REFRESH_TOKEN_NAME = 'refresh_token';
 
@@ -55,6 +58,7 @@ export class UserAuthComponent extends BaseComponent implements OnInit {
   }
 
   public onLoginUser(): void {
+    this.isSubmitted = true;
     this.userService.login(this.form.get("username")?.value, this.form.get("password")?.value)
       .pipe(
         catchError(error => {
@@ -63,7 +67,6 @@ export class UserAuthComponent extends BaseComponent implements OnInit {
         takeUntil(this.destroy$))
       .subscribe(
         (response: any) => {
-
           localStorage.setItem('user', response);
           localStorage.setItem(this.TOKEN_NAME, response[this.TOKEN_NAME]);
           localStorage.setItem(this.REFRESH_TOKEN_NAME, response[this.REFRESH_TOKEN_NAME]);
@@ -72,9 +75,6 @@ export class UserAuthComponent extends BaseComponent implements OnInit {
           this.userService.logOutIfTokenExpired();
           this.router.navigate(['books']);
         })
-  }
-
-  ngOnInit(): void {
   }
 
 }

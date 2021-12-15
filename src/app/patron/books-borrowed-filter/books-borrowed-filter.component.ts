@@ -100,23 +100,18 @@ export class BooksBorrowedFilterComponent extends BaseComponent implements OnIni
 
 
   public returnBook(id: number): void {
+    this.isModalVisibleR = true;
     this.idToBeReturned = id;
   }
 
 
   public deleteBookBorrowed(id: number): void {
-
+    this.isModalVisible = true;
     this.idToBeDeleted = id;
 
   }
 
-  public changeModalVisible() {
-    this.isModalVisible = true;
-  }
 
-  public changeModalVisibleR() {
-    this.isModalVisibleR = true;
-  }
 
 
   public confirm() {

@@ -10,8 +10,7 @@ import { PatronService } from '../../service/patron.service';
 
 @Component({
   selector: 'app-add-edit-patron',
-  templateUrl: './add-edit-patron.component.html',
-  styleUrls: ['./add-edit-patron.component.css']
+  templateUrl: './add-edit-patron.component.html'
 })
 export class AddEditPatronComponent extends BaseComponent implements OnInit {
 
@@ -79,9 +78,9 @@ export class AddEditPatronComponent extends BaseComponent implements OnInit {
   }
 
   public onUpdatePatron(): void {
-    this.patron.firstName = this.form.get("firstName")?.value;
-    this.patron.lastName = this.form.get("lastName")?.value;
-    this.patron.phoneNumber = this.form.get("phoneNumber")?.value;
+
+    this.patron = this.form.value;
+    this.patron.id = this.idPatron;
 
     this.patronService.updatePatron(this.patron)
       .pipe(catchError(error => {

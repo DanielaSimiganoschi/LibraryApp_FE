@@ -42,12 +42,10 @@ export class AuthorsAllComponent extends BaseComponent implements OnInit {
   }
 
   public deleteAuthor(id: number): void {
+    this.isModalVisible = true;
     this.idToBeDeleted = id;
   }
 
-  public changeModalVisible() {
-    this.isModalVisible = true;
-  }
 
   public confirm() {
     this.authorService.deleteAuthor(this.idToBeDeleted)

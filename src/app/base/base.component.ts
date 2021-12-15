@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-base',
   templateUrl: './base.component.html'
 })
-export class BaseComponent implements OnInit {
+export class BaseComponent implements OnDestroy {
 
   private _subject: Subject<void> = new Subject<void>();
   constructor() { }
@@ -18,8 +18,4 @@ export class BaseComponent implements OnInit {
     this._subject.next();
     this._subject.complete();
   }
-  
-  ngOnInit(): void {
-  }
-
 }

@@ -42,11 +42,8 @@ export class BooksAllComponent extends BaseComponent implements OnInit {
   }
 
   public deleteBook(id: number): void {
-    this.idToBeDeleted = id;
-  }
-
-  public changeModalVisible() {
     this.isModalVisible = true;
+    this.idToBeDeleted = id;
   }
 
   public confirm() {
@@ -57,7 +54,6 @@ export class BooksAllComponent extends BaseComponent implements OnInit {
         }),
         takeUntil(this.destroy$))
       .subscribe();
-
   }
 
 }

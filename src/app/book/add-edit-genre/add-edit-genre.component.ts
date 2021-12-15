@@ -10,8 +10,7 @@ import { GenreService } from '../../service/genre.service';
 
 @Component({
   selector: 'app-add-edit-genre',
-  templateUrl: './add-edit-genre.component.html',
-  styleUrls: ['./add-edit-genre.component.css']
+  templateUrl: './add-edit-genre.component.html'
 })
 export class AddEditGenreComponent extends BaseComponent implements OnInit {
 

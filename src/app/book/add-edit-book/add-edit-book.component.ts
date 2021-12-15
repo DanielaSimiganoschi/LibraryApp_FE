@@ -15,8 +15,7 @@ import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-add-edit-book',
-  templateUrl: './add-edit-book.component.html',
-  styleUrls: ['./add-edit-book.component.css']
+  templateUrl: './add-edit-book.component.html'
 })
 export class AddEditBookComponent extends BaseComponent implements OnInit {
 

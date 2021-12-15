@@ -44,11 +44,9 @@ export class GenresAllComponent extends BaseComponent implements OnInit {
 
   public deleteGenre(id: number): void {
     this.idToBeDeleted = id;
-  }
-
-  public changeModalVisible() {
     this.isModalVisible = true;
   }
+
 
   public confirm() {
     this.genreService.deleteGenre(this.idToBeDeleted)

@@ -1,4 +1,4 @@
-import { ErrorHandler, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -18,7 +18,7 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import '@cds/core/alert/register.js';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { BaseComponent } from './base/base.component';
-import { GlobalErrorHandler } from './service/global-error-handler';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -29,16 +29,16 @@ import { GlobalErrorHandler } from './service/global-error-handler';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     ClarityModule,
     HttpClientModule,
     BrowserAnimationsModule,
     ClrIconModule,
     CdsModule,
     FormsModule,
-    ReactiveFormsModule
+     ReactiveFormsModule,
+    AppRoutingModule,
   ],
-  providers: [AuthInterceptorProvider, AuthGuard, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },{provide: ErrorHandler, useClass: GlobalErrorHandler},
+  providers: [AuthInterceptorProvider, AuthGuard, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }, {provide: LocationStrategy, useClass: HashLocationStrategy},
     JwtHelperService],
   bootstrap: [AppComponent]
 })

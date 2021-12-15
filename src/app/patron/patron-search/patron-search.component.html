@@ -77,13 +77,4 @@
             </div>
         </cds-card><br>
     </div>
-
-    <clr-modal [(clrModalOpen)]="isModalVisible">
-        <h3 class="modal-title">Are you sure you want to delete this genre?</h3>
-        <div class="modal-body">This cannot be undone.</div>
-        <div class="modal-footer">
-            <button type="button" class="btn" (click)="isModalVisible = false">Cancel</button>
-            <button type="button" class="btn" (click)="confirm();isModalVisible = false">Delete</button>
-        </div>
-    </clr-modal>
 </div>

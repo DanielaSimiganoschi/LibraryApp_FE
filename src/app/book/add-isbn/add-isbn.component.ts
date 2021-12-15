@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { throwError } from 'rxjs';
-import { catchError, takeUntil } from 'rxjs/operators';
+import { catchError, debounceTime, takeUntil } from 'rxjs/operators';
 import { BaseComponent } from 'src/app/base/base.component';
 import { Book } from 'src/app/model/book.model';
 import { ISBN } from 'src/app/model/isbn.model';
@@ -11,8 +11,7 @@ import { BookService } from 'src/app/service/book.service';
 
 @Component({
   selector: 'app-add-isbn',
-  templateUrl: './add-isbn.component.html',
-  styleUrls: ['./add-isbn.component.css']
+  templateUrl: './add-isbn.component.html'
 })
 export class AddIsbnComponent extends BaseComponent implements OnInit {
 
@@ -61,7 +60,7 @@ export class AddIsbnComponent extends BaseComponent implements OnInit {
       });
 
     this.form.get("quantity")?.valueChanges
-      .pipe(catchError(error => {
+      .pipe(debounceTime(1000),catchError(error => {
         return throwError(error)
       }),
         takeUntil(this.destroy$))

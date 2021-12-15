@@ -14,8 +14,5 @@ export class AppComponent {
 
   constructor(private authService: AppUserService, private router: Router) { }
 
-  ngOnInit() {
-
-  }
 
 }

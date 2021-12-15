@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { throwError } from 'rxjs';
 import { catchError, takeUntil } from 'rxjs/operators';
 import { BaseComponent } from 'src/app/base/base.component';
-import { Book } from 'src/app/model/book.model';
 import { Patron } from 'src/app/model/patron.model';
 import { PatronService } from 'src/app/service/patron.service';
 
@@ -13,7 +12,7 @@ import { PatronService } from 'src/app/service/patron.service';
   templateUrl: './patron-search.component.html',
   styleUrls: ['./patron-search.component.css']
 })
-export class PatronSearchComponent extends BaseComponent implements OnInit {
+export class PatronSearchComponent extends BaseComponent {
 
 
   public patrons: Patron[] = [];
@@ -32,27 +31,6 @@ export class PatronSearchComponent extends BaseComponent implements OnInit {
     firstName: [''],
     lastName: ['']
   });
-
-  ngOnInit(): void {
-  }
-
-
-  public deletePatron(id: number): void {
-    this.idToBeDeleted = id;
-  }
-
-  public changeModalVisible() {
-    this.isModalVisible = true;
-  }
-
-  public confirm() {
-    this.patronService.deletePatron(this.idToBeDeleted)
-      .pipe(catchError(error => {
-        return throwError(error)
-      }),
-        takeUntil(this.destroy$))
-      .subscribe();
-  }
 
   public showResults() {
     this.patronService.searchByName(this.form.get("firstName")?.value, this.form.get("lastName")?.value)

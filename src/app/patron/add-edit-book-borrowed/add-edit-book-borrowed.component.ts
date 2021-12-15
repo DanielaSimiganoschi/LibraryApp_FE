@@ -14,8 +14,7 @@ import { PatronService } from 'src/app/service/patron.service';
 
 @Component({
   selector: 'app-add-edit-book-borrowed',
-  templateUrl: './add-edit-book-borrowed.component.html',
-  styleUrls: ['./add-edit-book-borrowed.component.css']
+  templateUrl: './add-edit-book-borrowed.component.html'
 })
 export class AddEditBookBorrowedComponent extends BaseComponent implements OnInit {
 
