@@ -1,6 +1,6 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" id="formAddEditPatron" class="clr-form clr-form-horizontal">
     <div class="clr-form-control">
-        <label for="firstName" class="clr-control-label">Title</label>
+        <label for="firstName" class="clr-control-label">First Name</label>
         <div class="clr-control-container">
             <div class="clr-input-wrapper">
                 <input formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted}"
@@ -9,11 +9,11 @@
         </div>
     </div>
     <div *ngIf="submitted && f.firstName.errors">
-        <div *ngIf="f.firstName.errors?.required">Name is required</div>
+        <div *ngIf="f.firstName.errors?.required">First Name is required</div>
     </div>
 
     <div class="clr-form-control">
-        <label for="lastName" class="clr-control-label">Title</label>
+        <label for="lastName" class="clr-control-label">Last name</label>
         <div class="clr-control-container">
             <div class="clr-input-wrapper">
                 <input formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted}"
@@ -22,11 +22,11 @@
         </div>
     </div>
     <div *ngIf="submitted && f.lastName.errors">
-        <div *ngIf="f.lastName.errors?.required">Name is required</div>
+        <div *ngIf="f.lastName.errors?.required">Last name is required</div>
     </div>
 
     <div class="clr-form-control">
-        <label for="phoneNumber" class="clr-control-label">Title</label>
+        <label for="phoneNumber" class="clr-control-label">Phone Number</label>
         <div class="clr-control-container">
             <div class="clr-input-wrapper">
                 <input formControlName="phoneNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted}"
@@ -35,7 +35,7 @@
         </div>
     </div>
     <div *ngIf="submitted && f.phoneNumber.errors">
-        <div *ngIf="f.phoneNumber.errors?.required">Name is required</div>
+        <div *ngIf="f.phoneNumber.errors?.required">Phone Number is required</div>
     </div>
 
     <div class="btn-group btn-primary">

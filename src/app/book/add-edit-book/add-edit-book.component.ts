@@ -9,14 +9,15 @@ import { AuthorService } from '../../service/author.service';
 import { BookService } from '../../service/book.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GenreService } from '../../service/genre.service';
-import { BookBorrowedService } from '../../service/book-borrowed.service';
+import { BaseComponent } from 'src/app/base/base.component';
+import { catchError, takeUntil } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-add-edit-book',
-  templateUrl: './add-edit-book.component.html',
-  styleUrls: ['./add-edit-book.component.css']
+  templateUrl: './add-edit-book.component.html'
 })
-export class AddEditBookComponent implements OnInit {
+export class AddEditBookComponent extends BaseComponent implements OnInit {
 
   public book: Book = {} as Book;
   public genres: any[] = [];
@@ -26,9 +27,12 @@ export class AddEditBookComponent implements OnInit {
   public isAddMode: boolean = false;
   public submitted: boolean = false;
   public isbnsA: ISBN[] = [] as ISBN[];
+  public isNotUnique: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private genreService: GenreService, private bookService: BookService, private authorService: AuthorService, private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router) {
+    super();
+  }
 
 
   public form = this.formBuilder.group({
@@ -42,13 +46,31 @@ export class AddEditBookComponent implements OnInit {
   });
 
   get isbnGroupsArray(): FormGroup[] {
-    console.log(this.ISBNS.controls as FormGroup[])
     return this.ISBNS.controls as FormGroup[];
   }
 
   get ISBNS() {
     return this.form.controls["isbns"] as FormArray;
   }
+
+  checkISBN(event?: any) {
+    this.bookService.getISBNForISBNCode(event.target.value)
+      .pipe(
+        catchError(error => {
+          return throwError(error)
+        }),
+        takeUntil(this.destroy$))
+      .subscribe(
+        (response: ISBN) => {
+          if (response == null) {
+            this.isNotUnique = false;
+          } else {
+            this.isNotUnique = true;
+          }
+
+        })
+  }
+
 
   addISBN(): void {
     const isbnForm = this.formBuilder.group({
@@ -62,20 +84,20 @@ export class AddEditBookComponent implements OnInit {
   }
 
   public getAuthors(): void {
-    this.authorService.getAuthors().subscribe(
-      (response: Author[]) => {
-        this.authors = response;
-        this.form.get("authors")?.setValue(response[1]);
+    this.authorService.getAuthors()
+      .pipe(catchError(error => {
+        return throwError(error)
+      }),
+        takeUntil(this.destroy$))
+      .subscribe(
+        (response: Author[]) => {
+          this.authors = response;
+          this.form.get("authors")?.setValue(response[1]);
 
-      },
-      (error: HttpErrorResponse) => {
-
-      }
-    )
+        })
   }
 
   public compareAuthors(item1: Author, item2: Author): boolean {
-    console.log(item1.id);
     return item1.id === item2.id;
   }
 
@@ -84,14 +106,14 @@ export class AddEditBookComponent implements OnInit {
   }
 
   public getGenres(): void {
-    this.genreService.getGenres().subscribe(
-      (response: Genre[]) => {
-        this.genres = response;
-      },
-      (error: HttpErrorResponse) => {
-
-      }
-    )
+    this.genreService.getGenres().pipe(
+      catchError(error => {
+        return throwError(error)
+      }),
+      takeUntil(this.destroy$)).subscribe(
+        (response: Genre[]) => {
+          this.genres = response;
+        });
   }
 
   onGenreSwitch(event: any, index: number) {
@@ -110,6 +132,7 @@ export class AddEditBookComponent implements OnInit {
 
     if (!this.isAddMode) {
       this.bookService.getBookById(this.idBook)
+        .pipe(takeUntil(this.destroy$))
         .subscribe((x: Book) => {
           this.book = x;
           this.genres = this.genres.map((genre) => {
@@ -127,40 +150,28 @@ export class AddEditBookComponent implements OnInit {
     }
 
 
-    this.form.get("quantity")?.valueChanges.subscribe((quantity) => {
+    this.form.get("quantity")?.valueChanges
+      .pipe(catchError(error => {
+        return throwError(error)
+      }),
+        takeUntil(this.destroy$))
 
-      for (let i = 0; i < quantity; i++) {
-        this.addISBN();
-      }
-      this.form.updateValueAndValidity();
-      console.log(this.ISBNS.controls)
+      .subscribe((quantity) => {
 
-    });
-  }
+        for (let i = 0; i < quantity; i++) {
+          this.addISBN();
+        }
+        this.form.updateValueAndValidity();
 
-
-
-  public findInvalidControls() {
-    const invalid = [];
-    const controls = this.form.controls;
-    for (const name in controls) {
-      if (controls[name].invalid) {
-        invalid.push(name);
-      }
-    }
-    return invalid;
+      });
   }
 
 
   public onSubmit() {
-    console.log(this.form)
     this.submitted = true;
 
     if (this.form.invalid) {
-      console.log(this.findInvalidControls());
       return;
-    } else {
-
     }
 
     if (this.isAddMode) {
@@ -190,19 +201,19 @@ export class AddEditBookComponent implements OnInit {
     });
     this.book.genres = genresSelected;
 
-    this.bookService.addBook(this.book).subscribe(
-      (response: any) => {
-        console.log(this.book);
-      },
-      (error: HttpErrorResponse) => {
-        console.log(this.book);
-        console.log(error.message);
-      }
-    )
+    this.bookService.addBook(this.book)
+      .pipe(catchError(error => {
+        return throwError(error)
+      }),
+        takeUntil(this.destroy$))
+      .subscribe();
+
+    this.router.navigate(['books'])
   }
 
   public onUpdateBook(): void {
 
+    this.book = this.form.value;
     this.book.id = this.idBook;
     let genresSelected: Genre[] = [];
 
@@ -217,15 +228,15 @@ export class AddEditBookComponent implements OnInit {
     this.book.genres = genresSelected;
 
 
-    console.log(this.book);
-    this.bookService.updateBook(this.book).subscribe(
-      (response: any) => {
-        console.log(this.book);
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error.message);
-      }
-    )
+
+    this.bookService.updateBook(this.book)
+      .pipe(catchError(error => {
+        return throwError(error)
+      }),
+        takeUntil(this.destroy$))
+      .subscribe()
+
+    this.router.navigate(['books'])
   }
 }
 

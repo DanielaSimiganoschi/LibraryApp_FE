@@ -23,8 +23,8 @@ export class BookService {
     return this.http.get<Book>(`${this.apiServerURL}/books/find/${bookId}`);
   }
 
-  public getBookByTitle(bookTitle: string): Observable<Book> {
-    return this.http.get<Book>(`${this.apiServerURL}/books/findByTitle/${bookTitle}`);
+  public getBooksByTitle(bookTitle: string): Observable<Book[]> {
+    return this.http.get<Book[]>(`${this.apiServerURL}/books/findByTitle/${bookTitle}`);
   }
 
   public addBook(book: Book): Observable<Book> {
@@ -39,16 +39,22 @@ export class BookService {
     return this.http.delete<void>(`${this.apiServerURL}/books/delete/${bookId}`);
   }
 
-  public filterByGenre(genreId: number): Observable<Book[]> {
-    return this.http.get<Book[]>(`${this.apiServerURL}/books/filterByGenre/${genreId}`);
-  }
-
-  public filterByAuthor(authorId: number): Observable<Book[]> {
-    return this.http.get<Book[]>(`${this.apiServerURL}/books/filterByAuthor/${authorId}`);
+  public filter(genreId?: number, authorId?: number, title?: string): Observable<Book[]> {
+    let queryParams: any = {};
+    if (authorId) queryParams.idAuthor = authorId;
+    if (genreId) queryParams.idGenre = genreId;
+    if (title) queryParams.title = title;
+    return this.http.get<Book[]>(`${this.apiServerURL}/books/filter`, {
+      params: queryParams
+    });
   }
 
 
   public getISBNSforBookId(bookId: number): Observable<ISBN[]> {
     return this.http.get<ISBN[]>(`${this.apiServerURL}/books/getISBNSForBookID/${bookId}`);
+  }
+
+  public getISBNForISBNCode(ISBN: string): Observable<ISBN> {
+    return this.http.get<ISBN>(`${this.apiServerURL}/books/getISBNForISBNCode/${ISBN}`);
   }
 }

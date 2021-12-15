@@ -70,11 +70,12 @@
                 <label for="{{i}}" class="clr-control-label">ISBN</label>
                 <div class="clr-control-container">
                     <div class="clr-input-wrapper">
-                        <input class="form-control" formControlName="isbn" [ngClass]="{ 'is-invalid': submitted }"
+                        <input (change)="checkISBN($event)" class="form-control" formControlName="isbn" [ngClass]="{ 'is-invalid': submitted }"
                             type="text" name="isbn" placeholder="Isbn.." class="clr-input" />
                     </div>
                 </div>
             </div>
+            <div *ngIf="this.isNotUnique">This isbn is already used.</div>
             <div *ngIf="submitted">
                 <div *ngIf="isbnGroup.get('isbn')?.errors?.required">Quantity is required</div>
                 <div *ngIf="isbnGroup.get('isbn')?.errors?.minlength">ISBN should have at least 10 Characters.</div>

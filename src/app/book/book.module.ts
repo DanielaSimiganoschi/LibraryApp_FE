@@ -13,6 +13,8 @@ import { CdsModule } from '@cds/angular';
 import { ClarityModule, ClrIconModule } from '@clr/angular';
 import { AddIsbnComponent } from './add-isbn/add-isbn.component';
 import { BooksFilterComponent } from './books-filter/books-filter.component';
+import { AddEditAuthorComponent } from './add-edit-author/add-edit-author.component';
+import { AuthorsAllComponent } from './authors-all/authors-all.component';
 
 
 @NgModule({
@@ -23,6 +25,8 @@ import { BooksFilterComponent } from './books-filter/books-filter.component';
     AddEditGenreComponent,
     AddIsbnComponent,
     BooksFilterComponent,
+    AddEditAuthorComponent,
+    AuthorsAllComponent,
   ],
   imports: [
     CommonModule,

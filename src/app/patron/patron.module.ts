@@ -12,7 +12,8 @@ import { CdsModule } from '@cds/angular';
 import { ClarityModule, ClrIconModule } from '@clr/angular';
 import { AddEditBookBorrowedComponent } from './add-edit-book-borrowed/add-edit-book-borrowed.component';
 import { BookBorrowedAllComponent } from './book-borrowed-all/book-borrowed-all.component';
-import { BookBorrowedFilerComponent } from './book-borrowed-filter/book-borrowed-filer.component';
+import { BooksBorrowedFilterComponent } from './books-borrowed-filter/books-borrowed-filter.component';
+import { PatronSearchComponent } from './patron-search/patron-search.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { BookBorrowedFilerComponent } from './book-borrowed-filter/book-borrowed
     PatronsAllComponent,
     AddEditBookBorrowedComponent,
     BookBorrowedAllComponent,
-    BookBorrowedFilerComponent,
+    BooksBorrowedFilterComponent,
+    PatronSearchComponent,
   ],
   imports: [
     CommonModule,

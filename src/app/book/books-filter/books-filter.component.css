@@ -1,0 +1,23 @@
+#description {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;  
+  
+}
+
+[data-title]:hover::after {
+	content: '';
+	position: absolute;
+	bottom: -12px;
+	left: 8px;
+	border: 8px solid transparent;	
+	border-bottom: 8px solid #000;
+}
+
+#allBooksDiv{
+    margin-left:5%;
+}
+
+#cardContentDiv{
+    padding-left: 3%;
+}

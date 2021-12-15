@@ -6,7 +6,7 @@
     </a>
   </div>
   <div class="header-nav">
-    <a routerLink="/users" class="nav-link nav-text">USERS</a>
+    <a routerLink="/users" *ngIf="isAdmin" class="nav-link nav-text">USERS</a>
     <a routerLink="/books" class="nav-link nav-text">BOOKS</a>
     <a routerLink="/patrons" class="nav-link nav-text">PATRONS</a>
 
@@ -24,3 +24,7 @@
     </div>
   </clr-modal>
 </header>
+
+<router-outlet>
+
+</router-outlet>

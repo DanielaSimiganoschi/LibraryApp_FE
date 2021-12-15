@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import '@cds/core/card/register.js';
 import { AppUserService } from './service/app-user.service';
+import { AuthGuardService } from './service/auth-guard.service';
+
 
 @Component({
   selector: 'app-root',
@@ -9,14 +12,7 @@ import { AppUserService } from './service/app-user.service';
 })
 export class AppComponent {
 
-  constructor(private authService: AppUserService) { }
+  constructor(private authService: AppUserService, private router: Router) { }
 
-  isLoggedIn(): boolean {
-    return this.authService.isAuthenticated();
-  }
-
-  ngOnInit(): void {
-    this.isLoggedIn();
-  }
 
 }

@@ -2,6 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, of, Subject, throwError, zip } from 'rxjs';
+import { catchError, map, takeUntil } from 'rxjs/operators';
+import { BaseComponent } from 'src/app/base/base.component';
 import { Author } from 'src/app/model/author.model';
 import { Book } from 'src/app/model/book.model';
 import { Genre } from 'src/app/model/genre.model';
@@ -14,24 +17,27 @@ import { GenreService } from 'src/app/service/genre.service';
   templateUrl: './books-filter.component.html',
   styleUrls: ['./books-filter.component.css']
 })
-export class BooksFilterComponent implements OnInit {
-
+export class BooksFilterComponent extends BaseComponent implements OnInit {
 
   public books: Book[] = [];
+  public booksFiltered: Book[] = [];
   public genres: Genre[] = [];
   public authors: Author[] = [];
-  public booksAuthorFiltered: Book[] = [];
-  public booksGenreFiltered: Book[] = [];
   public resultsVisible: boolean = false;
   public idToBeDeleted: number = -1;
   public isModalVisible: boolean = false;
+  public submitted: boolean = false;
+
 
   constructor(private formBuilder: FormBuilder, private genreService: GenreService, private bookService: BookService, private authorService: AuthorService, private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router) {
+    super();
+  }
 
   public form = this.formBuilder.group({
     author: [''],
     genre: [''],
+    title: ['']
   });
 
   ngOnInit(): void {
@@ -40,25 +46,27 @@ export class BooksFilterComponent implements OnInit {
   }
 
   public getGenres(): void {
-    this.genreService.getGenres().subscribe(
-      (response: Genre[]) => {
-        this.genres = response;
-      },
-      (error: HttpErrorResponse) => {
-
-      }
-    )
+    this.genreService.getGenres()
+      .pipe(catchError(error => {
+        return throwError(error)
+      }),
+        takeUntil(this.destroy$))
+      .subscribe(
+        (response: Genre[]) => {
+          this.genres = response;
+        })
   }
 
   public getAuthors(): void {
-    this.authorService.getAuthors().subscribe(
-      (response: Author[]) => {
-        this.authors = response;
-      },
-      (error: HttpErrorResponse) => {
-
-      }
-    )
+    this.authorService.getAuthors()
+      .pipe(catchError(error => {
+        return throwError(error)
+      }),
+        takeUntil(this.destroy$))
+      .subscribe(
+        (response: Author[]) => {
+          this.authors = response;
+        })
   }
 
   public deleteBook(id: number): void {
@@ -70,59 +78,35 @@ export class BooksFilterComponent implements OnInit {
   }
 
   public confirm() {
-    console.log(this.idToBeDeleted);
-    this.bookService.deleteBook(this.idToBeDeleted).subscribe(
-      (response: any) => {
-
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error.message)
-      }
-    );
+    this.bookService.deleteBook(this.idToBeDeleted)
+      .pipe(catchError(error => {
+        return throwError(error)
+      }),
+        takeUntil(this.destroy$))
+      .subscribe();
   }
 
+public redirectToAddISBN(bookId: number){
+  this.router.navigate([`books/addIsbnsForBook/${bookId}`]);
+}
 
   public showResults() {
-
-    if (this.form.get("author")?.value.id) {
-      this.bookService.filterByAuthor(this.form.get("author")?.value.id).subscribe(
-        (response: Book[]) => {
-          this.booksAuthorFiltered = response;
-          console.log(this.booksAuthorFiltered);
-        },
-        (error: HttpErrorResponse) => {
-        }
-      )
-    }
-
-    if (this.form.get("genre")?.value.id) {
-      this.bookService.filterByGenre(this.form.get("genre")?.value.id).subscribe(
-        (response: Book[]) => {
-          this.booksGenreFiltered = response;
-          console.log(this.booksGenreFiltered);
-        },
-        (error: HttpErrorResponse) => {
-        }
-      )
-    }
-
-    if (this.form.get("author")?.value.id && this.form.get("genre")?.value.id) {
-      this.books = this.booksGenreFiltered.filter(a => this.booksAuthorFiltered.some(b => a.id === b.id));
-    } else if (this.form.get("author")?.value.id) {
-      this.books =  this.booksAuthorFiltered;
-    } else if (this.form.get("genre")?.value.id) {
-      this.books =  this.booksGenreFiltered;
-    } else {
-      this.bookService.getBooks().subscribe(
+    this.bookService.filter(this.form.get("genre")?.value.id, this.form.get("author")?.value.id,
+      this.form.get("title")?.value)
+      .pipe(
+        catchError(error => {
+          return throwError(error.message)
+        }),
+        takeUntil(this.destroy$))
+      .subscribe(
         (response: Book[]) => {
           this.books = response;
-        },
-        (error: HttpErrorResponse) => {
-
+          this.form.reset({ genre: [''], author: [''], title: [''] });
         }
       )
-    
-    }
+
   }
 
 }
+
+

@@ -1,0 +1,50 @@
+<br>
+<div id="options" class="clr-row">
+    <div class="clr-col-lg-4 clr-col-12">
+        <a routerLink="addUser"><button class="btn">Add User</button></a>
+        <a routerLink="filterUsers"><button class="btn">Filter Users</button></a>
+    </div>
+</div>
+
+<br>
+<div class="clr-row">
+    <div class="clr-col-lg-4 clr-col-12" *ngFor="let user of users">
+
+        <cds-card aria-labelledby="cardSocialPost" style="--width: 20rem">
+            <div id="cardContentDiv" cds-layout="vertical gap:md">
+                <h2 id="cardSocialPost" cds-text="section" cds-layout="horizontal gap:sm align:vertical-center">
+                    Name: {{user.name}}<br>
+                </h2>
+
+                <cds-divider cds-card-remove-margin></cds-divider><br>
+
+                <div cds-text="body light" cds-layout="p-y:md">
+
+                    <i>Username:</i> {{user.username}}<br>
+                </div><br>
+              
+                <cds-divider cds-card-remove-margin></cds-divider>
+                <br>
+                <div cds-layout="horizontal gap:sm p-y:sm align:vertical-center">
+                    <cds-button action="flat-inline">
+                        <a routerLink="editUser/{{user.id}}" class="nav-link nav-text">Edit</a>
+                    </cds-button> &nbsp;&nbsp;
+                    <cds-button action="flat-inline">
+                        &nbsp; &nbsp; <a href="javascript:void(0);" (click)="changeModalVisible();deleteUser(user.id)"
+                            class="nav-link nav-text">Delete User</a>
+                    </cds-button>
+                </div>
+                <br>
+            </div>
+        </cds-card><br>
+    </div>
+
+    <clr-modal [(clrModalOpen)]="isModalVisible">
+        <h3 class="modal-title">Are you sure you want to delete this user?</h3>
+        <div class="modal-body">This cannot be undone.</div>
+        <div class="modal-footer">
+            <button type="button" class="btn" (click)="isModalVisible = false">Cancel</button>
+            <button type="button" class="btn" (click)="confirm();isModalVisible = false">Delete</button>
+        </div>
+    </clr-modal>
+</div>
