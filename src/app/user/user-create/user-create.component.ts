@@ -2,7 +2,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { componentStringsDefault } from '@cds/core';
 import { throwError } from 'rxjs';
 import { catchError, takeUntil } from 'rxjs/operators';
 import { BaseComponent } from 'src/app/base/base.component';
@@ -36,7 +35,7 @@ export class UserCreateComponent extends BaseComponent implements OnInit {
 
   public form = this.formBuilder.group({
     name: ['', Validators.compose([Validators.required])],
-    username: ['', Validators.compose([Validators.required])],  
+    username: ['', Validators.compose([Validators.required])],
     password: ['', Validators.compose([Validators.required, Validators.minLength(10)])],
     role: ['', Validators.compose([Validators.required])],
   });

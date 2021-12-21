@@ -7,6 +7,7 @@ import { AuthorService } from 'src/app/service/author.service';
 import { of } from 'rxjs';
 import { BookService } from 'src/app/service/book.service';
 import { ClarityModule } from '@clr/angular';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 describe('BooksAllComponent', () => {
@@ -26,6 +27,7 @@ describe('BooksAllComponent', () => {
             imports: [
                 BrowserModule,
                 HttpClientTestingModule,
+                BrowserAnimationsModule,
                 ClarityModule
             ],
             providers: [
