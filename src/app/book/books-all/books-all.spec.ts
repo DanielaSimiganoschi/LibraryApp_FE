@@ -39,6 +39,9 @@ describe('BooksAllComponent', () => {
             fixture.detectChanges();
         });
     }));
+    afterEach(() => {
+        fixture.destroy();
+      });
 
     it('should create', () => {
         expect(comp).toBeTruthy();

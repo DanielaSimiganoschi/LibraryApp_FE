@@ -42,6 +42,9 @@ describe('UserAuthComponent', () => {
             fixture.detectChanges();
         });
     }));
+    afterEach(() => {
+        fixture.destroy();
+      });
 
 
     it(`should set submitted to true`, fakeAsync(() => {

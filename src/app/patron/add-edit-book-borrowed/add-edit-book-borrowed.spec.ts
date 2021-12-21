@@ -85,6 +85,9 @@ describe('AddEditBookBorrowedComponent', () => {
             fixture.detectChanges();
         });
     }));
+    afterEach(() => {
+        fixture.destroy();
+      });
 
     it('should create', () => {
         expect(comp).toBeTruthy();
@@ -94,7 +97,7 @@ describe('AddEditBookBorrowedComponent', () => {
         expect(comp.books.length).toBeGreaterThan(0);
     });
 
-    it(`should call the onSubmit method and set submitted to true`, () => {
+    it(`should set submitted to true when onSubmit is called`, () => {
         comp.onSubmit();
         expect(comp.submitted).toBeTruthy();
     });

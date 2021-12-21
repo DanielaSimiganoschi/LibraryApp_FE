@@ -8,6 +8,12 @@ import { environment } from './environments/environment';
 if (environment.production) {
   enableProdMode();
 }
+const { JSDOM } = require("jsdom");
 
+const options = {
+  runScripts: "dangerously"
+};
+
+const dom = new JSDOM(``, options);
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));

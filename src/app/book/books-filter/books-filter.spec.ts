@@ -67,17 +67,22 @@ describe('BooksFilterComponent', () => {
             fixture.detectChanges();
         });
     }));
+    afterEach(() => {
+        fixture.destroy();
+      });
 
     it('should create', () => {
         expect(comp).toBeTruthy();
     });
 
-    it(`should call the getAuthors method and get length greater than 0`, () => {
+    it(`should call the getAuthors method and get length 1`, () => {
+        comp.getAuthors();
         expect(comp.authors.length).toEqual(1);
     });
 
-    it(`should call the getGenres method and get length greater than 0`, () => {
-        expect(comp.genres.length).toBeGreaterThan(0);
+    it(`should call the getGenres method and get length 1`, () => {
+        comp.getGenres();
+        expect(comp.genres.length).toEqual(1);
     });
 
 });

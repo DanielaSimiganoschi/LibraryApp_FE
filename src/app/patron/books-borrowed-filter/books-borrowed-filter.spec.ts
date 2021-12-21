@@ -86,24 +86,27 @@ describe('BooksBorrowedFilterComponent', () => {
             fixture.detectChanges();
         });
     }));
+    afterEach(() => {
+        fixture.destroy();
+      });
 
     it('should create', () => {
         expect(comp).toBeTruthy();
     });
 
-    it(`should call the onSubmit method and set submitted to true`, fakeAsync(() => {
+    it(`should set submitted to true when onSubmit is called`, () => {
       comp.onSubmit();
         expect(comp.submitted).toBeTruthy();
-    }));
+    });
 
-    it(`should call the getBooksNotReturned method and get length equal to 1`, () => {
+    it(`length of booksBorrowed should be 1 after submitting, in case of filtering by Not Returned`, () => {
         comp.form.controls['filterBy'].setValue("1");
         comp.onSubmit();
         expect(comp.booksBorrowed.length).toEqual(1);
     });
 
 
-    it(`should call the getBooksBorrowed method and get length 2`, () => {
+    it(`length of booksBorrowed should be 2 after submitting, when no filter is chosen`, () => {
         comp.form.controls['filterBy'].setValue("");
         comp.onSubmit();
         expect(comp.booksBorrowed.length).toEqual(2);
