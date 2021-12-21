@@ -25,7 +25,7 @@ describe('BooksBorrowedFilterComponent', () => {
 
     beforeEach(fakeAsync(() => {
 
-        mockPatronService = jasmine.createSpyObj(['findBooksBorrowed']);
+        mockPatronService = jasmine.createSpyObj(['findBooksBorrowed','findBooksNotReturned']);
         mockPatronService.findBooksBorrowed.and.returnValue(of([
             {
                 id: 0, isbn: 'isbn1', dateBorrowed: '1', toBeReturned: '2', returnedOnTime: true, returned: true,
@@ -38,6 +38,14 @@ describe('BooksBorrowedFilterComponent', () => {
         ]
         ));
 
+        mockPatronService.findBooksNotReturned.and.returnValue(of([
+            {
+                id: 0, isbn: 'isbn1', dateBorrowed: '1', toBeReturned: '2', returnedOnTime: true, returned: true,
+                patron_id: 1
+            }
+           
+        ]
+        ));
 
         mockBookBorrowedService = jasmine.createSpyObj(['deleteBookBorrowed']);
         mockBookBorrowedService.deleteBookBorrowed.and.returnValue(of([]));
@@ -84,28 +92,20 @@ describe('BooksBorrowedFilterComponent', () => {
     });
 
     it(`should call the onSubmit method and set submitted to true`, fakeAsync(() => {
-        spyOn(comp, 'onSubmit');
-        comp.form.controls['filterBy'].setValue("1");
-        let btn = fixture.debugElement.query(By.css('button[type=submit]')).nativeElement;
-        btn.click();
-        tick();
-        fixture.detectChanges();
-        expect(comp.onSubmit).toHaveBeenCalled();
+      comp.onSubmit();
         expect(comp.submitted).toBeTruthy();
     }));
 
     it(`should call the getBooksNotReturned method and get length equal to 1`, () => {
         comp.form.controls['filterBy'].setValue("1");
         comp.onSubmit();
-        fixture.detectChanges();
         expect(comp.booksBorrowed.length).toEqual(1);
     });
 
 
-    it(`should call the getBooksBorrowed method and get length greater than 0`, () => {
+    it(`should call the getBooksBorrowed method and get length 2`, () => {
         comp.form.controls['filterBy'].setValue("");
         comp.onSubmit();
-        fixture.detectChanges();
         expect(comp.booksBorrowed.length).toEqual(2);
     });
 

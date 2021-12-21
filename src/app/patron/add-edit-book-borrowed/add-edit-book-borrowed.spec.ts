@@ -19,18 +19,18 @@ describe('AddEditBookBorrowedComponent', () => {
     let fixture: ComponentFixture<AddEditBookBorrowedComponent>;
     let de: DebugElement;
     let el: HTMLElement;
-    //let mockBookBorrowedService;
+    let mockBookBorrowedService;
     let mockBookService;
     let mockPatronService;
 
 
     beforeEach(fakeAsync(() => {
 
-        // mockBookBorrowedService = jasmine.createSpyObj(['getBookBorrowed']);
-        // mockBookBorrowedService.getBookBorrowed.and.returnValue(of([
-        //     { id: 0, firstName: 'Haruki', lastName: 'Murakami' },
-        // ]
-        // ));
+        mockBookBorrowedService = jasmine.createSpyObj(['getBookBorrowed']);
+        mockBookBorrowedService.getBookBorrowed.and.returnValue(of([
+            { id: 0, firstName: 'Haruki', lastName: 'Murakami' },
+        ]
+        ));
 
         mockPatronService = jasmine.createSpyObj(['addBookBorrowed']);
         mockPatronService.addBookBorrowed.and.returnValue(of([
@@ -73,7 +73,7 @@ describe('AddEditBookBorrowedComponent', () => {
                         },
                     },
                 },
-
+                {provide: BookBorrowedService, useValue: mockBookBorrowedService},
                 { provide: BookService, useValue: mockBookService },
                 { provide: PatronService, useValue: mockPatronService }
             ]
@@ -94,19 +94,13 @@ describe('AddEditBookBorrowedComponent', () => {
         expect(comp.books.length).toBeGreaterThan(0);
     });
 
-    it(`should call the onSubmit method and set submitted to true`, fakeAsync(() => {
-        spyOn(comp, 'onSubmit');
-        comp.form.controls['book'].setValue({
-            id: 1, title: 'title 1', publishedDate: '11/10/2021', quantity: 1, description: 'description 1', author: { "id": 2, "firstName": "Oscar", "lastName": "Wilde" },
-            isbns: [{ id: 1, borrowed: false, book_id: 1, isbn: "isbn1 carte1" },
-            { id: 2, borrowed: false, book_id: 1, isbn: "isbn2 carte1" }], genres: [{ id: 1, name: "Comedy" }]
-        });
-        comp.form.controls['isbn'].setValue({ id: 2, borrowed: false, book_id: 1, isbn: "isbn2 carte1" });
+    it(`should call the onSubmit method and set submitted to true`, () => {
         comp.onSubmit();
         expect(comp.submitted).toBeTruthy();
-    }));
+    });
 
     it(`should call the onAddBookBorrowed method`, () => {
+        spyOn(comp, 'onAddBookBorrowed');
         comp.form.controls['book'].setValue({
             id: 1, title: 'title 1', publishedDate: '11/10/2021', quantity: 1, description: 'description 1', author: { "id": 2, "firstName": "Oscar", "lastName": "Wilde" },
             isbns: [{ id: 1, borrowed: false, book_id: 1, isbn: "isbn1 carte1" },

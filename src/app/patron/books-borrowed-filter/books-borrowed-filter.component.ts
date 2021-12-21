@@ -83,8 +83,7 @@ export class BooksBorrowedFilterComponent extends BaseComponent implements OnIni
       .subscribe(
         (response: BookBorrowed[]) => {
           this.myFlag = true;
-          this.booksBorrowed = response;  
-          console.log( new Date() ,this.booksBorrowed);
+          this.booksBorrowed = response; 
           this.form.reset();
         })
   }
