@@ -1,6 +1,5 @@
-import { TestBed, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed, ComponentFixture, fakeAsync, tick, waitForAsync } from '@angular/core/testing';
 import { BrowserModule, By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 
 import { Router } from '@angular/router';
 import { BooksAllComponent } from './books-all.component';
@@ -13,8 +12,6 @@ import { ClarityModule } from '@clr/angular';
 describe('BooksAllComponent', () => {
     let comp: BooksAllComponent;
     let fixture: ComponentFixture<BooksAllComponent>;
-    let de: DebugElement;
-    let el: HTMLElement;
     let mockBookService;
 
     beforeEach(() => {
@@ -44,18 +41,18 @@ describe('BooksAllComponent', () => {
     });
 
 
-    it('should create', () => {
+    it('should create', waitForAsync(() => {
         expect(comp).toBeTruthy();
-    });
+    }));
 
-    it(`should call the getBooks method`, () => {
+    it(`should call the getBooks method`, waitForAsync(() => {
         expect(comp.getBooks.length).toEqual(0);
-    });
+    }));
 
 
-    it(`should show Modal`, () => {
+    it(`should show Modal`, waitForAsync(() => {
         comp.deleteBook(1);
         expect(comp.isModalVisible).toBeTruthy();
-    });
+    }));
 
 });
