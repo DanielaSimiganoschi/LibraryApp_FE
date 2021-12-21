@@ -25,7 +25,7 @@ describe('BooksBorrowedFilterComponent', () => {
 
     beforeEach(fakeAsync(() => {
 
-        mockPatronService = jasmine.createSpyObj(['findBooksBorrowed','findBooksNotReturned']);
+        mockPatronService = jasmine.createSpyObj(['findBooksBorrowed', 'findBooksNotReturned']);
         mockPatronService.findBooksBorrowed.and.returnValue(of([
             {
                 id: 0, isbn: 'isbn1', dateBorrowed: '1', toBeReturned: '2', returnedOnTime: true, returned: true,
@@ -43,7 +43,7 @@ describe('BooksBorrowedFilterComponent', () => {
                 id: 0, isbn: 'isbn1', dateBorrowed: '1', toBeReturned: '2', returnedOnTime: true, returned: true,
                 patron_id: 1
             }
-           
+
         ]
         ));
 
@@ -86,16 +86,16 @@ describe('BooksBorrowedFilterComponent', () => {
             fixture.detectChanges();
         });
     }));
-    afterEach(() => {
-        fixture.destroy();
-      });
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 
     it('should create', () => {
         expect(comp).toBeTruthy();
     });
 
     it(`should set submitted to true when onSubmit is called`, () => {
-      comp.onSubmit();
+        comp.onSubmit();
         expect(comp.submitted).toBeTruthy();
     });
 

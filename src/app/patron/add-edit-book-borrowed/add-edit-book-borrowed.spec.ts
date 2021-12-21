@@ -85,8 +85,8 @@ describe('AddEditBookBorrowedComponent', () => {
             fixture.detectChanges();
         });
     }));
-    afterEach(() => {
-        fixture.destroy();
+    afterAll(() => {
+        TestBed.resetTestingModule();
       });
 
     it('should create', () => {

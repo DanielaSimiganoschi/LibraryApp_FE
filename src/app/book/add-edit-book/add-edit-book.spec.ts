@@ -1,4 +1,4 @@
-import { TestBed, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed, ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { BrowserModule, By } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DebugElement } from '@angular/core';
@@ -9,7 +9,6 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AddEditBookComponent } from './add-edit-book.component';
 import { AuthorService } from 'src/app/service/author.service';
-import { Observable } from 'rxjs';
 import { of } from 'rxjs';
 
 
@@ -61,6 +60,10 @@ describe('AddEditBookComponent', () => {
             fixture.detectChanges();
         });
     }));
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+      });
 
     it('should create', () => {
         expect(comp).toBeTruthy();
