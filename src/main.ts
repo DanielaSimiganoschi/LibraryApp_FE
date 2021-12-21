@@ -9,6 +9,7 @@ if (environment.production) {
   enableProdMode();
 }
 
+var globalThis = require('globalthis')();
 
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
