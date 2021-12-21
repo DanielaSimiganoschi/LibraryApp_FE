@@ -21,8 +21,6 @@ import { AppUserService } from '../../service/app-user.service';
 
 export class UserAuthComponent extends BaseComponent {
 
-
-
   public form = this.formBuilder.group({
     username: ['', Validators.required],
     password: ['', Validators.required],
