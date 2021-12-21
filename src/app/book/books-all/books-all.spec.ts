@@ -7,7 +7,6 @@ import { AuthorService } from 'src/app/service/author.service';
 import { of } from 'rxjs';
 import { BookService } from 'src/app/service/book.service';
 import { ClarityModule } from '@clr/angular';
-import { RouterTestingModule } from '@angular/router/testing';
 
 
 describe('BooksAllComponent', () => {
@@ -35,13 +34,11 @@ describe('BooksAllComponent', () => {
                 { provide: BookService, useValue: mockBookService }
             ]
         });
-            TestBed.compileComponents();
-            fixture = TestBed.createComponent(BooksAllComponent);
-            comp = fixture.componentInstance;
-            fixture.detectChanges();
-      
-    });
+        fixture = TestBed.createComponent(BooksAllComponent);
+        comp = fixture.componentInstance;
+        fixture.detectChanges();
 
+    });
 
     it('should create', waitForAsync(() => {
         expect(comp).toBeTruthy();
