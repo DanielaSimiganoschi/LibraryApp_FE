@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import '@cds/core/card/register.js';
 import { AppUserService } from './service/app-user.service';
 import { AuthGuardService } from './service/auth-guard.service';
 

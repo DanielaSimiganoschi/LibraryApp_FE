@@ -15,7 +15,6 @@ import {
 } from './service/auth-guard.service';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
-import '@cds/core/alert/register.js';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { BaseComponent } from './base/base.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
