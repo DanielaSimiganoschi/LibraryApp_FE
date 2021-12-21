@@ -11,13 +11,13 @@
     </div>
 
     <div class="clr-form-control">
-        <clr-datalist-container>
+        <!-- <clr-datalist-container> -->
             <label for="isbn" class="clr-control-label">Select ISBN</label>
             <input formControlName="isbn" clrDatalistInput placeholder="No label" name="isbn" />
             <datalist ngDefaultControl id="isbn">
                 <option *ngFor="let isbn of isbns; let a=index" [value]="isbn.isbn">{{isbn.isbn}}</option>
             </datalist>
-        </clr-datalist-container>
+        <!-- </clr-datalist-container> -->
     </div>
     <div *ngIf="checkISBSLength() && form.get('book')?.touched">
         Oops! The ISBN must have at least 10 characters.

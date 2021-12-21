@@ -12,7 +12,6 @@ import { AddEditBookBorrowedComponent } from './add-edit-book-borrowed.component
 import { BookBorrowedService } from 'src/app/service/book-borrowed.service';
 import { BookService } from 'src/app/service/book.service';
 import { PatronService } from 'src/app/service/patron.service';
-import { ClarityModule } from '@clr/angular';
 
 
 describe('AddEditBookBorrowedComponent', () => {
@@ -59,8 +58,7 @@ describe('AddEditBookBorrowedComponent', () => {
                 FormsModule,
                 ReactiveFormsModule,
                 RouterTestingModule,
-                HttpClientTestingModule,
-                ClarityModule
+                HttpClientTestingModule
             ],
             providers: [
                 { provide: Router, useClass: class { navigate = jasmine.createSpy("navigate"); } },
