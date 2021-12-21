@@ -1,12 +1,13 @@
-import { TestBed, ComponentFixture, fakeAsync, tick, waitForAsync } from '@angular/core/testing';
+import { TestBed, ComponentFixture, waitForAsync } from '@angular/core/testing';
 import { BrowserModule, By } from '@angular/platform-browser';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
 import { BooksAllComponent } from './books-all.component';
 import { AuthorService } from 'src/app/service/author.service';
 import { of } from 'rxjs';
 import { BookService } from 'src/app/service/book.service';
 import { ClarityModule } from '@clr/angular';
+import { RouterTestingModule } from '@angular/router/testing';
 
 
 describe('BooksAllComponent', () => {
@@ -25,6 +26,7 @@ describe('BooksAllComponent', () => {
             ],
             imports: [
                 BrowserModule,
+                HttpClientTestingModule,
                 ClarityModule
             ],
             providers: [
