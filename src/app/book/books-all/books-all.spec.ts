@@ -9,7 +9,7 @@ import { BookService } from 'src/app/service/book.service';
 import { ClarityModule, ClrIconModule } from '@clr/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CdsModule } from '@cds/angular';
-
+import 'globalthis/polyfill';
 
 describe('BooksAllComponent', () => {
     let comp: BooksAllComponent;
