@@ -24,7 +24,7 @@ describe('AddEditBookBorrowedComponent', () => {
     let mockPatronService;
 
 
-    beforeEach(fakeAsync(() => {
+    beforeEach((done) => {
 
         mockBookBorrowedService = jasmine.createSpyObj(['getBookBorrowed']);
         mockBookBorrowedService.getBookBorrowed.and.returnValue(of([
@@ -83,8 +83,9 @@ describe('AddEditBookBorrowedComponent', () => {
             de = fixture.debugElement.query(By.css('form'));
             el = de.nativeElement;
             fixture.detectChanges();
+            done();
         });
-    }));
+    });
     afterAll(() => {
         TestBed.resetTestingModule();
       });

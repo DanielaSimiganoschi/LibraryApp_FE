@@ -1,4 +1,4 @@
-import { TestBed, ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { TestBed, ComponentFixture} from '@angular/core/testing';
 import { BrowserModule, By } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DebugElement } from '@angular/core';
@@ -19,7 +19,7 @@ describe('AddEditBookComponent', () => {
     let el: HTMLElement;
     let mockAuthorService;
 
-    beforeEach(fakeAsync(() => {
+    beforeEach(((done) => {
 
         mockAuthorService = jasmine.createSpyObj(['getAuthors']);
         mockAuthorService.getAuthors.and.returnValue(of( [
@@ -58,6 +58,7 @@ describe('AddEditBookComponent', () => {
             de = fixture.debugElement.query(By.css('form'));
             el = de.nativeElement;
             fixture.detectChanges();
+            done();
         });
     }));
 

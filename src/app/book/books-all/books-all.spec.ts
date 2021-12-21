@@ -16,7 +16,7 @@ describe('BooksAllComponent', () => {
     let el: HTMLElement;
     let mockBookService;
 
-    beforeEach(fakeAsync(() => {
+    beforeEach((done) => {
 
         mockBookService = jasmine.createSpyObj(['getBooks']);
         mockBookService.getBooks.and.returnValue(of([]));
@@ -37,8 +37,9 @@ describe('BooksAllComponent', () => {
             fixture = TestBed.createComponent(BooksAllComponent);
             comp = fixture.componentInstance;
             fixture.detectChanges();
+            done();
         });
-    }));
+    });
     afterAll(() => {
         TestBed.resetTestingModule();
       });

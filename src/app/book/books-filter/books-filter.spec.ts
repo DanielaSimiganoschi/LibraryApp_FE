@@ -20,7 +20,7 @@ describe('BooksFilterComponent', () => {
     let mockAuthorService;
     let mockGenreService;
 
-    beforeEach(fakeAsync(() => {
+    beforeEach((done) => {
 
         mockAuthorService = jasmine.createSpyObj(['getAuthors']);
         mockAuthorService.getAuthors.and.returnValue(of([
@@ -65,8 +65,9 @@ describe('BooksFilterComponent', () => {
             de = fixture.debugElement.query(By.css('form'));
             el = de.nativeElement;
             fixture.detectChanges();
+            done();
         });
-    }));
+    });
     afterAll(() => {
         TestBed.resetTestingModule();
       });
