@@ -8,6 +8,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
+import { ClarityModule } from '@clr/angular';
 
 
 describe('UserAuthComponent', () => {
@@ -26,7 +27,8 @@ describe('UserAuthComponent', () => {
                 FormsModule,
                 ReactiveFormsModule,
                 RouterTestingModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                ClarityModule
             ],
             providers: [
                 JwtHelperService,

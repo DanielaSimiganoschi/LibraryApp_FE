@@ -12,6 +12,7 @@ import { BookService } from 'src/app/service/book.service';
 import { PatronService } from 'src/app/service/patron.service';
 import { BooksBorrowedFilterComponent } from './books-borrowed-filter.component';
 import { BookBorrowedService } from 'src/app/service/book-borrowed.service';
+import { ClarityModule } from '@clr/angular';
 
 
 describe('BooksBorrowedFilterComponent', () => {
@@ -60,7 +61,8 @@ describe('BooksBorrowedFilterComponent', () => {
                 FormsModule,
                 ReactiveFormsModule,
                 RouterTestingModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                ClarityModule
             ],
             providers: [
                 { provide: Router, useClass: class { navigate = jasmine.createSpy("navigate"); } },

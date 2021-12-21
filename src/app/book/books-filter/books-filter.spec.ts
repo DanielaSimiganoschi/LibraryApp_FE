@@ -10,6 +10,7 @@ import { AuthorService } from 'src/app/service/author.service';
 import { of } from 'rxjs';
 import { BooksFilterComponent } from './books-filter.component';
 import { GenreService } from 'src/app/service/genre.service';
+import { ClarityModule } from '@clr/angular';
 
 
 describe('BooksFilterComponent', () => {
@@ -42,7 +43,8 @@ describe('BooksFilterComponent', () => {
                 FormsModule,
                 ReactiveFormsModule,
                 RouterTestingModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                ClarityModule
             ],
             providers: [
                 { provide: Router, useClass: class { navigate = jasmine.createSpy("navigate"); } },

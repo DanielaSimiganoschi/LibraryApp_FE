@@ -7,6 +7,7 @@ import { BooksAllComponent } from './books-all.component';
 import { AuthorService } from 'src/app/service/author.service';
 import { of } from 'rxjs';
 import { BookService } from 'src/app/service/book.service';
+import { ClarityModule } from '@clr/angular';
 
 
 describe('BooksAllComponent', () => {
@@ -26,7 +27,8 @@ describe('BooksAllComponent', () => {
                 BooksAllComponent
             ],
             imports: [
-                BrowserModule
+                BrowserModule,
+                ClarityModule
             ],
             providers: [
                 { provide: Router, useClass: class { navigate = jasmine.createSpy("navigate"); } },

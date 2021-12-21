@@ -10,6 +10,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AddEditBookComponent } from './add-edit-book.component';
 import { AuthorService } from 'src/app/service/author.service';
 import { of } from 'rxjs';
+import { ClarityModule } from '@clr/angular';
+import { CdsModule } from '@cds/angular';
 
 
 describe('AddEditBookComponent', () => {
@@ -36,7 +38,9 @@ describe('AddEditBookComponent', () => {
                 FormsModule,
                 ReactiveFormsModule,
                 RouterTestingModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                ClarityModule, 
+                CdsModule
             ],
             providers: [
                 { provide: Router, useClass: class { navigate = jasmine.createSpy("navigate"); } },

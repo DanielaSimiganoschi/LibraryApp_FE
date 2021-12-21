@@ -35,10 +35,10 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     ClrIconModule,
     CdsModule,
     FormsModule,
-     ReactiveFormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
   ],
-  providers: [AuthInterceptorProvider, AuthGuard, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }, {provide: LocationStrategy, useClass: HashLocationStrategy},
+  providers: [AuthInterceptorProvider, AuthGuard, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }, { provide: LocationStrategy, useClass: HashLocationStrategy },
     JwtHelperService],
   bootstrap: [AppComponent]
 })
