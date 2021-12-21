@@ -6,7 +6,7 @@ import { BooksAllComponent } from './books-all.component';
 import { AuthorService } from 'src/app/service/author.service';
 import { of } from 'rxjs';
 import { BookService } from 'src/app/service/book.service';
-import { ClarityModule } from '@clr/angular';
+import { ClarityModule, ClrIconModule } from '@clr/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CdsModule } from '@cds/angular';
 
@@ -30,7 +30,8 @@ describe('BooksAllComponent', () => {
                 HttpClientTestingModule,
                 BrowserAnimationsModule,
                 ClarityModule,
-                CdsModule
+                CdsModule,
+                ClrIconModule
             ],
             providers: [
                 { provide: Router, useClass: class { navigate = jasmine.createSpy("navigate"); } },
@@ -38,22 +39,29 @@ describe('BooksAllComponent', () => {
                 { provide: BookService, useValue: mockBookService }
             ]
         });
+        TestBed.compileComponents();
+    });
+
+    it('should create', waitForAsync(() => {
         fixture = TestBed.createComponent(BooksAllComponent);
         comp = fixture.componentInstance;
         fixture.detectChanges();
-
-    });
-
-    it('should create', () => {
         expect(comp).toBeTruthy();
-    });
+    }));
 
     it(`should call the getBooks method`, waitForAsync(() => {
+        fixture = TestBed.createComponent(BooksAllComponent);
+        comp = fixture.componentInstance;
+        fixture.detectChanges();
         expect(comp.getBooks.length).toEqual(0);
     }));
 
 
     it(`should show Modal`, waitForAsync(() => {
+        fixture = TestBed.createComponent(BooksAllComponent);
+        comp = fixture.componentInstance;
+        fixture.detectChanges();
+
         comp.deleteBook(1);
         fixture.detectChanges();
         expect(comp.isModalVisible).toBeTruthy();
