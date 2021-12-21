@@ -3,13 +3,13 @@ sudo: false
 
 language: node_js
 node_js:
-  - '12'
+  - '14'
 
 branches:
   only:
   - dev1
 before_script:
-  - npm install -g @angular/cli 
+  - npm install -g @angular/cli
 
 addons:
   chrome: stable
@@ -24,4 +24,4 @@ install:
 script:
   - ng lint
   - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
-  - ng build --prod --base-href https://github.com/DanielaSimiganoschi/LibraryApp_FE/
+  #- ng build --prod --base-href https://github.com/DanielaSimiganoschi/LibraryApp_FE/

@@ -9,6 +9,7 @@ import { BookService } from 'src/app/service/book.service';
 import { ClarityModule, ClrIconModule } from '@clr/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CdsModule } from '@cds/angular';
+import { CommonModule } from '@angular/common';
 import 'globalthis/polyfill';
 
 describe('BooksAllComponent', () => {
@@ -26,6 +27,7 @@ describe('BooksAllComponent', () => {
                 BooksAllComponent
             ],
             imports: [
+                CommonModule,
                 BrowserModule,
                 HttpClientTestingModule,
                 BrowserAnimationsModule,
@@ -39,7 +41,6 @@ describe('BooksAllComponent', () => {
                 { provide: BookService, useValue: mockBookService }
             ]
         });
-        TestBed.compileComponents();
     });
 
     it('should create', waitForAsync(() => {
