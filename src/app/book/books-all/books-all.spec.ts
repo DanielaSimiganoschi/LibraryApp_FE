@@ -8,6 +8,7 @@ import { of } from 'rxjs';
 import { BookService } from 'src/app/service/book.service';
 import { ClarityModule } from '@clr/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CdsModule } from '@cds/angular';
 
 
 describe('BooksAllComponent', () => {
@@ -28,7 +29,8 @@ describe('BooksAllComponent', () => {
                 BrowserModule,
                 HttpClientTestingModule,
                 BrowserAnimationsModule,
-                ClarityModule
+                ClarityModule,
+                CdsModule
             ],
             providers: [
                 { provide: Router, useClass: class { navigate = jasmine.createSpy("navigate"); } },
@@ -42,9 +44,9 @@ describe('BooksAllComponent', () => {
 
     });
 
-    it('should create', waitForAsync(() => {
+    it('should create', () => {
         expect(comp).toBeTruthy();
-    }));
+    });
 
     it(`should call the getBooks method`, waitForAsync(() => {
         expect(comp.getBooks.length).toEqual(0);
