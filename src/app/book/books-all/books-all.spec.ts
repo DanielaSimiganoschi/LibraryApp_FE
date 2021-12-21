@@ -51,6 +51,7 @@ describe('BooksAllComponent', () => {
 
     it(`should show Modal`, waitForAsync(() => {
         comp.deleteBook(1);
+        fixture.detectChanges();
         expect(comp.isModalVisible).toBeTruthy();
     }));
 

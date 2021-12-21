@@ -2,7 +2,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Book } from '../../model/book.model';
 import { BookService } from '../../service/book.service';
-import '@cds/core/card/register.js';
 import { Router } from '@angular/router';
 import { catchError, takeUntil } from 'rxjs/operators';
 import { BaseComponent } from 'src/app/base/base.component';
