@@ -1,4 +1,4 @@
-import { TestBed, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed, ComponentFixture, fakeAsync, tick, waitForAsync } from '@angular/core/testing';
 import { BrowserModule, By } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DebugElement } from '@angular/core';
@@ -16,7 +16,7 @@ describe('UserAuthComponent', () => {
     let de: DebugElement;
     let el: HTMLElement;
 
-    beforeEach(fakeAsync(() => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [
                 UserAuthComponent
@@ -33,41 +33,41 @@ describe('UserAuthComponent', () => {
                 { provide: Router, useClass: class { navigate = jasmine.createSpy("navigate"); } },
                 { provide: JwtHelperService, useClass: class { decodeToken = jasmine.createSpy("decodeToken"); } }
             ]
-        }).compileComponents().then(() => {
-            fixture = TestBed.createComponent(UserAuthComponent);
-            spyOn(JwtHelperService.prototype, 'decodeToken').and.returnValue(true);
-            comp = fixture.componentInstance;
-            de = fixture.debugElement.query(By.css('form'));
-            el = de.nativeElement;
-            fixture.detectChanges();
         });
-    }));
+
+        TestBed.compileComponents();
+        fixture = TestBed.createComponent(UserAuthComponent);
+        spyOn(JwtHelperService.prototype, 'decodeToken').and.returnValue(true);
+        comp = fixture.componentInstance;
+        de = fixture.debugElement.query(By.css('form'));
+        el = de.nativeElement;
+        fixture.detectChanges();
+    });
 
 
-    it(`should set submitted to true`, fakeAsync(() => {
+    it(`should set submitted to true`, waitForAsync(() => {
         comp.onLoginUser();
         expect(comp.isSubmitted).toBeTruthy();
     }));
 
-    it(`should call the onLoginUser method`, fakeAsync(() => {
+    it(`should call the onLoginUser method`, waitForAsync(() => {
         spyOn(comp, 'onLoginUser');
         comp.form.controls['username'].setValue('dsimiganoschi');
         comp.form.controls['password'].setValue('1244');
         let btn = fixture.debugElement.query(By.css('button[type=submit]')).nativeElement;
         btn.click();
-        tick();
         fixture.detectChanges();
         expect(comp.onLoginUser).toHaveBeenCalled();
     }));
 
-    it(`form should be invalid`, fakeAsync(() => {
+    it(`form should be invalid`, waitForAsync(() => {
         comp.form.controls['username'].setValue('');
         comp.form.controls['password'].setValue('');
 
         expect(comp.form.valid).toBeFalsy();
     }));
 
-    it(`form should be valid`, fakeAsync(() => {
+    it(`form should be valid`, waitForAsync(() => {
         comp.form.controls['username'].setValue('dsimiganoschi');
         comp.form.controls['password'].setValue('1244');
 
