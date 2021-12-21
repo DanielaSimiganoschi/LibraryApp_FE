@@ -49,7 +49,7 @@ describe('BooksAllComponent', () => {
     });
 
 
-    it(`should set submitted to true`, () => {
+    it(`should show Modal`, () => {
         comp.deleteBook(1);
         expect(comp.isModalVisible).toBeTruthy();
     });
