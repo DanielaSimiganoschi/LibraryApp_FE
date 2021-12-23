@@ -1,4 +1,4 @@
-// import { TestBed, ComponentFixture} from '@angular/core/testing';
+// import { TestBed, ComponentFixture, fakeAsync} from '@angular/core/testing';
 // import { BrowserModule, By } from '@angular/platform-browser';
 // import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { DebugElement } from '@angular/core';
@@ -21,7 +21,7 @@
 //     let el: HTMLElement;
 //     let mockAuthorService;
 
-//     beforeEach(((done) => {
+//     beforeEach(fakeAsync(() => {
 
 //         mockAuthorService = jasmine.createSpyObj(['getAuthors']);
 //         mockAuthorService.getAuthors.and.returnValue(of( [
@@ -62,13 +62,10 @@
 //             de = fixture.debugElement.query(By.css('form'));
 //             el = de.nativeElement;
 //             fixture.detectChanges();
-//             done();
+       
 //         });
 //     }));
 
-//     afterAll(() => {
-//         TestBed.resetTestingModule();
-//       });
 
 //     it('should create', () => {
 //         expect(comp).toBeTruthy();
