@@ -15,7 +15,6 @@ import {
 } from './service/auth-guard.service';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
-import '@cds/core/alert/register.js';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { BaseComponent } from './base/base.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
@@ -35,10 +34,10 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     ClrIconModule,
     CdsModule,
     FormsModule,
-     ReactiveFormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
   ],
-  providers: [AuthInterceptorProvider, AuthGuard, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }, {provide: LocationStrategy, useClass: HashLocationStrategy},
+  providers: [AuthInterceptorProvider, AuthGuard, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }, { provide: LocationStrategy, useClass: HashLocationStrategy },
     JwtHelperService],
   bootstrap: [AppComponent]
 })

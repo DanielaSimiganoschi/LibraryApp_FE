@@ -7,7 +7,6 @@ import { PatronsAllComponent } from './patrons-all/patrons-all.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import '@cds/core/alert/register.js';
 import { CdsModule } from '@cds/angular';
 import { ClarityModule, ClrIconModule } from '@clr/angular';
 import { AddEditBookBorrowedComponent } from './add-edit-book-borrowed/add-edit-book-borrowed.component';

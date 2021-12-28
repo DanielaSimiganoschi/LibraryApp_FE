@@ -34,6 +34,7 @@ export class BooksBorrowedFilterComponent extends BaseComponent implements OnIni
     filterBy: ['']
   });
   submitted: boolean = false;
+  myFlag: boolean = false;
 
   constructor(private patronService: PatronService, private formBuilder: FormBuilder, private bookBorrowedService: BookBorrowedService, private router: Router, private route: ActivatedRoute) {
     super();
@@ -81,7 +82,8 @@ export class BooksBorrowedFilterComponent extends BaseComponent implements OnIni
         takeUntil(this.destroy$))
       .subscribe(
         (response: BookBorrowed[]) => {
-          this.booksBorrowed = response;
+          this.myFlag = true;
+          this.booksBorrowed = response; 
           this.form.reset();
         })
   }
@@ -94,6 +96,7 @@ export class BooksBorrowedFilterComponent extends BaseComponent implements OnIni
     } else if (this.form.get("filterBy")?.value == 2) {
       this.getBooksReturnedOnTime();
     } else {
+     
       this.getBooksBorrowed(this.idPatron);
     }
   }
