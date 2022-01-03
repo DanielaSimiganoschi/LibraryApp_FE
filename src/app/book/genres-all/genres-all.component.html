@@ -8,7 +8,7 @@
 
 <br>
 <div class="clr-row">
-    <div class="clr-col-lg-4 clr-col-12" *ngFor="let genre of genres; let a=index">
+    <div class="clr-col-lg-4 clr-col-12" *ngFor="let genre of genres$ | async">
         <cds-card aria-labelledby="cardSocialPost" style="--width: 20rem">
             <div cds-layout="vertical gap:md">
                 <h3 id="cardWithList" cds-text="section" cds-layout="horizontal gap:sm align:vertical-center">

@@ -15,6 +15,12 @@ import { AddIsbnComponent } from './add-isbn/add-isbn.component';
 import { BooksFilterComponent } from './books-filter/books-filter.component';
 import { AddEditAuthorComponent } from './add-edit-author/add-edit-author.component';
 import { AuthorsAllComponent } from './authors-all/authors-all.component';
+import { EffectsModule } from '@ngrx/effects';
+import { GenreEffects } from './store/effect/genre.effects';
+import { genreReducer } from './store/reducer/genre.reducer';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
 
 
 @NgModule({
@@ -37,7 +43,13 @@ import { AuthorsAllComponent } from './authors-all/authors-all.component';
     ReactiveFormsModule,
     CdsModule,
     ClarityModule,
-    ClrIconModule
+    ClrIconModule,
+    StoreModule.forRoot({ genres: genreReducer}),
+    EffectsModule.forRoot([GenreEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
 
   ]
 })
