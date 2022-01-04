@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,7 +7,7 @@ import { Genre } from '../../model/genre.model';
 import { GenreService } from '../../service/genre.service';
 import { addGenre, updateGenre } from '../store/action/genre.actions';
 import { GenreState } from '../store/reducer/genre.reducer';
-import { genreByIdSelector } from '../store/selector/genre.selectors';
+import {  genreSelector } from '../store/selector/genre.selectors';
 
 @Component({
   selector: 'app-add-edit-genre',
@@ -29,7 +28,7 @@ export class AddEditGenreComponent extends BaseComponent implements OnInit {
   });
   public genre: any;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private genreService: GenreService, private route: ActivatedRoute,
+  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute,
     private store: Store<GenreState>) {
     super();
   }
@@ -41,11 +40,7 @@ export class AddEditGenreComponent extends BaseComponent implements OnInit {
     this.isAddMode = !this.idGenre;
 
     if (!this.isAddMode) {
-     this.genre = this.store.pipe(select(genreByIdSelector(this.idGenre))).subscribe(
-      (genre) => {
-      
-      console.log(genre) 
-      });
+     this.genre =  this.store.pipe(select(genreSelector,{id:this.idGenre}));
      this.form.patchValue(this.genre);
  
     }
@@ -68,13 +63,11 @@ export class AddEditGenreComponent extends BaseComponent implements OnInit {
   public onAddGenre(): void {
     this.genre.name = this.form.get("name")?.value;
     this.store.dispatch(addGenre(this.genre));
-    this.router.navigate(['books/genres'])
   }
 
   public onUpdateGenre(): void {
     this.genre.name = this.form.get("name")?.value;
     this.store.dispatch(updateGenre(this.genre));
-    this.router.navigate(['books/genres'])
 
   }
 

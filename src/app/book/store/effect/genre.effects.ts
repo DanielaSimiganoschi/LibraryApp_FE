@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
-import { concatMap, exhaustMap, map, takeUntil, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { catchError, concatMap, exhaustMap, map, } from 'rxjs/operators';
 import { GenreService } from 'src/app/service/genre.service';
-import { addGenre, addGenreSuccess, deleteGenre, getGenreById, getGenreByIdSuccess, getGenres, getGenresSuccess, updateGenre } from '../action/genre.actions';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { addGenre, addGenreSuccess, deleteGenre, getGenres, getGenresSuccess, updateGenre, updateGenreSuccess } from '../action/genre.actions';
 
 
 @Injectable()
@@ -12,7 +15,11 @@ export class GenreEffects {
       ofType(getGenres),
       exhaustMap(() =>
         this.genreService.getGenres().pipe(
-          map((genres) => getGenresSuccess(genres))
+          map((genres) => getGenresSuccess(genres)),
+          catchError((error) => {
+            this._snackBar.open(`${error.message}`);
+            return Observable.throw(error);
+          })
         )
       )
     )
@@ -23,22 +30,32 @@ export class GenreEffects {
       ofType(addGenre),
       concatMap(({ genre }) =>
         this.genreService.addGenre(genre).pipe(
-          map((newGenre) => addGenreSuccess(newGenre))
+          map((newGenre) => addGenreSuccess(newGenre), this.router.navigate(['books/genres']),
+          ),
+          catchError((error) => {
+            this._snackBar.open(`${error.message}`);
+            return Observable.throw(error);
+          })
         )
       )
-    )
-  );
+    ));
+
 
   updateGenre$ = createEffect(() =>
     this.action$.pipe(
       ofType(updateGenre),
       concatMap(({ genre }) =>
         this.genreService.updateGenre(genre).pipe(
-          map((newGenre) => addGenreSuccess(newGenre))
+          map((newGenre) => updateGenreSuccess(newGenre), this.router.navigate(['books/genres'])
+          ),
+          catchError((error) => {
+            this._snackBar.open(`${error.message}`);
+           
+            return Observable.throw(error);
+          })
         )
       )
-    )
-  );
+    ));
 
 
   deleteGenre$ = createEffect(() =>
@@ -46,9 +63,16 @@ export class GenreEffects {
       ofType(deleteGenre),
       concatMap(({ id }) =>
         this.genreService.deleteGenre(id)
-      )
-    ), { dispatch: false }
+      ),
+      catchError((error) => {
+        this._snackBar.open(`${error.message}`);
+        return Observable.throw(error);
+      })
+    ),
+    { dispatch: false }
   );
 
-  constructor(private action$: Actions, private genreService: GenreService) { }
+  constructor(private action$: Actions, private genreService: GenreService, private router: Router, private _snackBar: MatSnackBar) { }
 }
+
+

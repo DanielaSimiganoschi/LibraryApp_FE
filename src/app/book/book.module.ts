@@ -21,6 +21,7 @@ import { genreReducer } from './store/reducer/genre.reducer';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { environment } from 'src/environments/environment';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    MatSnackBarModule,
     CdsModule,
     ClarityModule,
     ClrIconModule,
