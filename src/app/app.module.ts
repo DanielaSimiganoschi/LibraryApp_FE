@@ -18,6 +18,11 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { BaseComponent } from './base/base.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './reducers';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -35,7 +40,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     CdsModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule,
+    AppRoutingModule
   ],
   providers: [AuthInterceptorProvider, AuthGuard, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }, { provide: LocationStrategy, useClass: HashLocationStrategy },
     JwtHelperService],
