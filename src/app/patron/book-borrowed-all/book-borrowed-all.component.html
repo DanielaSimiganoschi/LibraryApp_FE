@@ -1,0 +1,81 @@
+<br>
+<div id="options" class="clr-row">
+  <div class="clr-col-lg-4 clr-col-12">
+    <a routerLink="addBookBorrowed"><button [disabled]="checkButton()" class="btn">Add Book Borrowed</button></a>
+  <a routerLink="booksBorrowedFilter"><button class="btn">Filter Books Borrowed</button></a>
+ 
+  </div>
+</div>
+<br>
+<div  class="clr-row">
+  <div class="clr-col-lg-4 clr-col-12" *ngFor="let bookBorrowed of booksBorrowed">
+
+    <cds-card aria-labelledby="cardSocialPost" style="--width: 15rem">
+      <div id="cardContentDiv"  cds-layout="vertical gap:md">
+        <h2 id="cardSocialPost" cds-text="section" cds-layout="horizontal gap:sm align:vertical-center">
+          Title: {{bookBorrowed.isbn}}<br>
+        </h2>
+
+        <cds-divider cds-card-remove-margin></cds-divider><br>
+
+        <div cds-text="body light" cds-layout="p-y:md">
+
+          <i>Date Borrowed:</i> {{bookBorrowed.dateBorrowed}}<br>
+        </div><br>
+        <div cds-text="body light" cds-layout="p-y:md">
+
+
+          <i>Date to be Returned:</i> {{bookBorrowed.toBeReturned}} <br>
+        </div><br>
+        <div cds-text="body light" cds-layout="p-y:md">
+
+
+          <i>Returned On Time:</i> {{bookBorrowed.returnedOnTime}}<br>
+        </div><br>
+        <div cds-text="body light" cds-layout="p-y:md">
+
+
+          <i>Returned:</i> {{bookBorrowed.returned}}<br>
+        </div><br>
+
+
+        <cds-divider cds-card-remove-margin></cds-divider>
+        <br>
+        <div cds-layout="horizontal gap:sm p-y:sm align:vertical-center">
+          <!-- <cds-button action="flat-inline">
+            <a routerLink="editBookBorrowed/{{bookBorrowed.id}}" class="nav-link nav-text">Edit</a>
+          </cds-button> &nbsp;&nbsp; -->
+          <cds-button action="flat-inline">
+            &nbsp; &nbsp; <a href="javascript:void(0);"
+              (click)="deleteBookBorrowed(bookBorrowed.id)" class="nav-link nav-text">Delete
+              Book</a>
+          </cds-button>
+          <cds-button *ngIf="!bookBorrowed.returned" action="flat-inline">
+            &nbsp; &nbsp; <a href="javascript:void(0);" (click)="returnBook(bookBorrowed.id)"
+              class="nav-link nav-text">Return Book</a>
+          </cds-button>
+        </div>
+        <br>
+      </div>
+    </cds-card><br>
+  </div>
+
+  <clr-modal [(clrModalOpen)]="isModalVisible">
+    <h3 class="modal-title">Are you sure you want to delete this Book Borrowed?</h3>
+    <div class="modal-body">This cannot be undone.</div>
+    <div class="modal-footer">
+      <button type="button" class="btn" (click)="isModalVisible = false">Cancel</button>
+      <button type="button" class="btn" (click)="confirm();isModalVisible = false">Delete</button>
+    </div>
+  </clr-modal>
+
+
+  <clr-modal [(clrModalOpen)]="isModalVisibleR">
+    <h3 class="modal-title">Are you sure you want to return this Book Borrowed?</h3>
+    <div class="modal-body">This cannot be undone.</div>
+    <div class="modal-footer">
+      <button type="button" class="btn" (click)="isModalVisible = false">Cancel</button>
+      <button type="button" class="btn" (click)="confirmR();isModalVisible = false">Return</button>
+    </div>
+  </clr-modal>
+</div>

@@ -1,0 +1,62 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit();" id="formAddUser" class="clr-form clr-form-horizontal">
+
+    <div class="clr-form-control">
+        <label for="title" class="clr-control-label">Name</label>
+        <div class="clr-control-container">
+            <div class="clr-input-wrapper">
+                <input formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted}" type="text"
+                    id="title" name="title" placeholder="name.." class="clr-input" />
+            </div>
+        </div>
+    </div>
+    <div *ngIf="submitted && f.name.errors">
+        <div *ngIf="f.name.errors?.required">Name is required</div>
+    </div>
+
+    <div class="clr-form-control">
+        <label for="title" class="clr-control-label">Username</label>
+        <div class="clr-control-container">
+            <div class="clr-input-wrapper">
+                <input (change)="checkUsername($event)" formControlName="username" class="form-control" type="text"
+                    id="username" name="username" placeholder="username.." class="clr-input" />
+            </div>
+        </div>
+    </div>
+    <div *ngIf="this.isNotUnique">This username is already used.</div>
+    <div *ngIf="submitted">
+        <div *ngIf="f.username.errors?.required">Username is required</div>
+      
+    </div>
+
+    <div class="clr-form-control">
+        <label for="title" class="clr-control-label">Password</label>
+        <div class="clr-control-container">
+            <div class="clr-input-wrapper">
+                <input formControlName="password" class="form-control"  type="password"
+                    id="password" name="password" placeholder="password.." class="clr-input" />
+            </div>
+        </div>
+       
+    </div>
+    <div *ngIf="submitted">
+        <div *ngIf="f.password.errors?.required">Password is required</div>
+        <div *ngIf="f.password.errors?.minlength">Password should have at least 10 Characters.</div>
+    </div>
+  
+
+    <div class="clr-form-control">
+        <label for="role" class="clr-control-label">Select Role</label>
+        <select  [compareWith]="compareRoles"  class="form-control" formControlName="role"  (change)="onRoleChange($event)" name="role" >
+            <option *ngFor="let role of roles; let a=index" [ngValue]="role">{{role.name}}</option>
+        </select>
+    </div>
+    <div *ngIf="submitted && f.role.errors">
+        <div *ngIf="f.role.errors?.required">Role is required</div>
+    </div>
+
+  
+
+    <div class="btn-group btn-primary">
+        <button type="submit" class="btn">Add</button>
+    </div>
+</form>

@@ -11,25 +11,25 @@ export class GenreService {
 
   apiServerURL = environment.apiBaseURL;
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  public getGenres(): Observable<Genre[]>{
+  public getGenres(): Observable<Genre[]> {
     return this.http.get<Genre[]>(`${this.apiServerURL}/genre/all`);
   }
 
-  public getGenreById(genreId:number): Observable<Genre>{
+  public getGenreById(genreId: number): Observable<Genre> {
     return this.http.get<Genre>(`${this.apiServerURL}/genre/find/${genreId}`);
   }
 
-  public addGenre(genre:Genre): Observable<Genre>{
+  public addGenre(genre: Genre): Observable<Genre> {
     return this.http.post<Genre>(`${this.apiServerURL}/genre/add`, genre);
   }
 
-  public updateGenre(genre:Genre): Observable<Genre>{
-    return this.http.put<Genre>(`${this.apiServerURL}/genre/update`,genre);
+  public updateGenre(genre: Genre): Observable<Genre> {
+    return this.http.put<Genre>(`${this.apiServerURL}/genre/update`, genre);
   }
 
-  public deleteGenre(genreId:number): Observable<void>{
+  public deleteGenre(genreId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiServerURL}/genre/delete/${genreId}`);
   }
 }

@@ -1,0 +1,85 @@
+<form [formGroup]="form" (ngSubmit)="showResults()" id="formFilterBooks" class="clr-form clr-form-horizontal">
+
+    <div class="clr-form-control">
+        <div class="clr-select-container">
+            <label for="author" class="clr-control-label">Author</label>
+            <select formControlName="author" class="form-control" clrSelect name="author">
+                <option *ngFor="let author of authors; let a=index" [ngValue]="author">{{author.firstName}}
+                    {{author.lastName}}</option>
+            </select>
+        </div>
+    </div>
+
+    
+    <div class="clr-form-control">
+        <div class="clr-select-container">
+            <label for="genre" class="clr-control-label">Genre</label>
+            <select formControlName="genre" class="form-control" clrSelect name="genre">
+                <option *ngFor="let genre of genres; let a=index" [ngValue]="genre">{{genre.name}}
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <div class="clr-form-control">
+        <label for="title" class="clr-control-label">Title</label>
+        <div class="clr-control-container">
+            <div class="clr-input-wrapper">
+                <input formControlName="title" class="form-control" [ngClass]="{ 'is-invalid': submitted}"
+                    type="text" id="title" name="title" placeholder="Title.." class="clr-input" />
+            </div>
+        </div>
+    </div>
+
+    <div  style="margin:20px;" class="btn-group btn-primary">
+        <button type="submit" class="btn">Filter</button>
+    </div>
+</form>
+
+<div id="allBooksDiv" class="clr-row">
+    <div class="clr-col-lg-4 clr-col-12" *ngFor="let book of books">
+
+        <cds-card aria-labelledby="cardSocialPost" style="--width: 20rem">
+            <div  id="cardContentDiv" cds-layout="vertical gap:md">
+                <h2 id="cardSocialPost" cds-text="section" cds-layout="horizontal gap:sm align:vertical-center">
+                    Title: {{book.title}}<br>
+                </h2>
+
+                <cds-divider cds-card-remove-margin></cds-divider><br>
+
+                <div id="description" data-title="{{book.description}}" cds-text="body light" cds-layout="p-y:md">
+
+                    <i>Description:</i> {{book.description}}<br>
+                </div><br>
+                <div cds-text="body light" cds-layout="p-y:md">
+                    <i>Author:</i> {{book.author.firstName}} {{book.author.lastName}}<br>
+                </div><br>
+
+                <cds-divider cds-card-remove-margin></cds-divider>
+                <br>
+                <div cds-layout="horizontal gap:sm p-y:sm align:vertical-center">
+                    <cds-button action="flat-inline">
+                        <a routerLink="editBook/{{book.id}}" class="nav-link nav-text">Edit</a>
+                    </cds-button> &nbsp;&nbsp;
+                    <cds-button (click)="redirectToAddISBN(book.id)" action="flat-inline">
+                        Add ISBNS
+                    </cds-button> &nbsp;&nbsp;
+                    <cds-button action="flat-inline">
+                        &nbsp; &nbsp; <a href="javascript:void(0);" (click)="changeModalVisible();deleteBook(book.id)"
+                            class="nav-link nav-text">Delete Book</a>
+                    </cds-button>
+                </div>
+                <br>
+            </div>
+        </cds-card><br>
+    </div>
+
+    <clr-modal [(clrModalOpen)]="isModalVisible">
+        <h3 class="modal-title">Are you sure you want to delete this genre?</h3>
+        <div class="modal-body">This cannot be undone.</div>
+        <div class="modal-footer">
+            <button type="button" class="btn" (click)="isModalVisible = false">Cancel</button>
+            <button type="button" class="btn" (click)="confirm();isModalVisible = false">Delete</button>
+        </div>
+    </clr-modal>
+</div>

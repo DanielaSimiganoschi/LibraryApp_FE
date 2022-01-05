@@ -1,0 +1,35 @@
+<br>
+<div id="options" class="clr-row">
+    <div class="clr-col-lg-4 clr-col-12">
+        <a routerLink=""><button class="btn">Back</button></a>
+        <a routerLink="addGenre"><button class="btn">Add Genre</button></a>
+    </div>
+</div>
+
+<br>
+<div class="clr-row">
+    <div class="clr-col-lg-4 clr-col-12" *ngFor="let genre of genres$ | async">
+        <cds-card aria-labelledby="cardSocialPost" style="--width: 20rem">
+            <div cds-layout="vertical gap:md">
+                <h3 id="cardWithList" cds-text="section" cds-layout="horizontal gap:sm align:vertical-center">
+                    {{genre.name}}
+                </h3>
+
+                <div cds-layout="horizontal gap:sm p-y:sm align:vertical-center">
+                    <a routerLink="editGenre/{{genre.id}}" class="nav-link nav-text">Edit Genre</a>
+                    &nbsp; &nbsp; <a href="javascript:void(0);" (click)="deleteGenre(genre.id)"
+                        class="nav-link nav-text">Delete Genre</a>
+                </div>
+                <br>
+            </div>
+        </cds-card><br>
+    </div>
+    <clr-modal [(clrModalOpen)]="isModalVisible">
+        <h3 class="modal-title">Are you sure you want to delete this genre?</h3>
+        <div class="modal-body">This cannot be undone.</div>
+        <div class="modal-footer">
+            <button type="button" class="btn" (click)="isModalVisible = false">Cancel</button>
+            <button type="button" class="btn" (click)="confirm();isModalVisible = false">Delete</button>
+        </div>
+    </clr-modal>
+</div>

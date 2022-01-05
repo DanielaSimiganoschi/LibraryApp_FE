@@ -1,0 +1,80 @@
+<form [formGroup]="form" (ngSubmit)="showResults()" id="formSearchPatron" class="clr-form clr-form-horizontal">
+
+
+
+    <div class="clr-form-control">
+        <label for="firstName" class="clr-control-label">First Name</label>
+        <div class="clr-control-container">
+            <div class="clr-input-wrapper">
+                <input formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted}"
+                    type="text" id="firstName" name="firstName" placeholder="First Name.." class="clr-input" />
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div class="clr-form-control">
+        <label for="lastName" class="clr-control-label">Last Name</label>
+        <div class="clr-control-container">
+            <div class="clr-input-wrapper">
+                <input formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted}"
+                    type="text" id="lastName" name="lastName" placeholder="Last name.." class="clr-input" />
+            </div>
+        </div>
+    </div>
+
+    <div  style="margin:20px;" class="btn-group btn-primary">
+        <button type="submit" class="btn">Filter</button>
+    </div>
+</form>
+
+<div  class="clr-row">
+    <div class="clr-col-lg-4 clr-col-12" *ngFor="let patron of patrons">
+
+        <cds-card aria-labelledby="cardSocialPost" style="--width: 20rem">
+            <div id="cardContentDiv"  cds-layout="vertical gap:md">
+
+                <h3>{{patron.firstName}} {{patron.lastName}}</h3>
+                <cds-divider cds-card-remove-margin></cds-divider><br>
+
+                <div cds-text="body light" cds-layout="p-y:md">
+
+                    <i>First Name</i>: {{patron.firstName}}
+                </div><br>
+                <div cds-text="body light" cds-layout="p-y:md">
+
+                    <i>Last Name</i>: {{patron.lastName}}<br>
+                </div><br>
+
+                <div cds-text="body light" cds-layout="p-y:md">
+
+                    <i>Phone Number</i>: {{patron.phoneNumber}}<br>
+                </div><br>
+
+                <div cds-text="body light" cds-layout="p-y:md">
+
+                    <i>Score</i>: {{patron.score}}<br>
+                </div><br>
+
+                <div cds-text="body light" cds-layout="p-y:md">
+
+                    <i>Nr. Books Allowed</i>: {{patron.nrBooksAllowed}}<br>
+                </div><br>
+
+                <cds-divider cds-card-remove-margin></cds-divider>
+                <br>
+                <div cds-layout="horizontal gap:sm p-y:sm align:vertical-center">
+                    <cds-button action="flat-inline">
+                        <a routerLink="editPatron/{{patron.id}}" class="nav-link nav-text">Edit</a>
+                    </cds-button> &nbsp;&nbsp;
+                    <cds-button action="flat-inline">
+                        <a routerLink="manageBooksBorrowed/{{patron.id}}" class="nav-link nav-text">Manage Books
+                            Borrowed</a>
+                    </cds-button>
+                </div>
+                <br>
+            </div>
+        </cds-card><br>
+    </div>
+</div>

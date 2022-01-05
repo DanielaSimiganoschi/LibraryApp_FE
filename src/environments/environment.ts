@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   
-  apiBaseURL:'http://localhost:8080/library'
+  apiBaseURL:'http://localhost:8080/library',
+  checkTokenInterval: 10000
 };
 
 /*
